@@ -30,18 +30,4 @@ class UserFactory
             $user->getUpdatedAt()
         );
     }
-
-    /**
-     * @param \App\Domain\Model\User $domainUser
-     * @return \App\Infrastructure\Entity\User
-     */
-    public function toPersistence(DomainUser $domainUser): User
-    {
-        $user = new User();
-
-        $user->setFirstName($domainUser->getFirstName());
-        $user->setLastName($domainUser->getLastName());
-
-        return $user;
-    }
 }

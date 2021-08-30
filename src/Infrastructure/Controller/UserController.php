@@ -112,6 +112,8 @@ class UserController extends AbstractController
      */
     public function user(Request $request): Response
     {
+        dd($request->getContent());
+
         $payload = $request->toArray();
 
         /** @var \App\Domain\Model\User $user */
