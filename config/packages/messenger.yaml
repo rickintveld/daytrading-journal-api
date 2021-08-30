@@ -1,0 +1,28 @@
+framework:
+  messenger:
+    # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+    failure_transport: failed
+    default_bus: query.bus
+    buses:
+      command.bus: ~
+      query.bus: ~
+
+    transports:
+      # https://symfony.com/doc/current/messenger.html#transport-configuration
+      async: "%env(MESSENGER_TRANSPORT_DSN)%"
+      failed: "doctrine://default?queue_name=failed"
+      sync: 'sync://'
+
+    routing:
+      # ASYNC
+      'App\Application\Command\CreateUserCommand': async
+      'App\Application\Command\UpdateUserCommand': async
+      'App\Application\Command\BlockUserCommand': async
+      'App\Application\Command\UnBlockUserCommand': async
+      'App\Application\Command\RemoveUserCommand': async
+      'App\Application\Command\RestoreUserCommand': async
+      'App\Application\Command\AddProfitCommand': async
+      'App\Application\Command\WithdrawCommand': async
+
+      # SYNC
+      'App\Application\Query\FindUserQuery': sync
