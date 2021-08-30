@@ -39,13 +39,15 @@ class ProfitController extends AbstractController
      */
     public function add(Request $request): Response
     {
-        $this->addProfitRequestHandler->handle($request);
+        try {
+            $this->addProfitRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'message' => sprintf('Added an amount of %s to your account', $payload['profit']),
-        ], Response::HTTP_OK);
+        return $this->json(['message' => sprintf('Added an amount of %s to your account', $payload['profit'])]);
     }
 
     /**
@@ -55,12 +57,16 @@ class ProfitController extends AbstractController
      */
     public function withdraw(Request $request): Response
     {
-        $this->withdrawRequestHandler->handle($request);
+        try {
+            $this->withdrawRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
         return $this->json([
-            'message' => sprintf('Made a withdraw of %s from your account', $payload['amount']),
-        ], Response::HTTP_OK);
+            'message' => sprintf('Made a withdraw of %s from your account', $payload['amount'])
+        ]);
     }
 }

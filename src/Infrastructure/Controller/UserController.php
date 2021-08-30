@@ -78,9 +78,14 @@ class UserController extends AbstractController
      */
     public function users(): Response
     {
-        $users = $this->queryBus->query(new AllUsersQuery());
+        try {
+            $users = $this->queryBus->query(new AllUsersQuery());
+        } catch (\Exception $exception) {
 
-        return $this->json(['users' => $users], Response::HTTP_OK);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
+
+        return $this->json(['users' => $users]);
     }
 
     /**
@@ -89,9 +94,13 @@ class UserController extends AbstractController
      */
     public function blockedUsers(): Response
     {
-        $users = $this->queryBus->query(new AllUsersQuery(true, false));
+        try {
+            $users = $this->queryBus->query(new AllUsersQuery(true, false));
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
-        return $this->json(['users' => $users], Response::HTTP_OK);
+        return $this->json(['users' => $users]);
     }
 
     /**
@@ -100,27 +109,33 @@ class UserController extends AbstractController
      */
     public function removedUsers(): Response
     {
-        $users = $this->queryBus->query(new AllUsersQuery(false, true));
+        try {
+            $users = $this->queryBus->query(new AllUsersQuery(false, true));
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
-        return $this->json(['users' => $users], Response::HTTP_OK);
+        return $this->json(['users' => $users]);
     }
 
     /**
      * @Route("/user", name="user", methods={"GET"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function user(Request $request): Response
     {
-        dd($request->getContent());
-
         $payload = $request->toArray();
 
-        /** @var \App\Domain\Model\User $user */
-        $user = $this->queryBus->query(new FindUserQuery($payload['identifier']));
+        try {
+            /** @var \App\Domain\Model\User $user */
+            $user = $this->queryBus->query(new FindUserQuery($payload['identifier']));
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
-        return $this->json(['user' => $user], Response::HTTP_OK);
-
+        return $this->json(['user' => $user]);
     }
 
     /**
@@ -131,11 +146,15 @@ class UserController extends AbstractController
      */
     public function create(Request $request): Response
     {
-        $this->createUserRequestHandler->handle($request);
+        try {
+            $this->createUserRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json(['success' => sprintf('Created user %s', $payload['email'])], Response::HTTP_OK);
+        return $this->json(['success' => sprintf('Created user %s', $payload['email'])]);
     }
 
     /**
@@ -145,11 +164,15 @@ class UserController extends AbstractController
      */
     public function update(Request $request): Response
     {
-        $this->updateUserRequestHandler->handle($request);
+        try {
+            $this->updateUserRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json(['success' => sprintf('Updated user %s', $payload['identifier'])], Response::HTTP_OK);
+        return $this->json(['success' => sprintf('Updated user %s', $payload['identifier'])]);
     }
 
     /**
@@ -160,11 +183,15 @@ class UserController extends AbstractController
      */
     public function block(Request $request): Response
     {
-        $this->blockUserRequestHandler->handle($request);
+        try {
+            $this->blockUserRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json(['message' => sprintf('User %s is blocked', $payload['identifier'])], Response::HTTP_OK);
+        return $this->json(['message' => sprintf('User %s is blocked', $payload['identifier'])]);
     }
 
     /**
@@ -175,11 +202,15 @@ class UserController extends AbstractController
      */
     public function unblock(Request $request): Response
     {
-        $this->unblockUserRequestHandler->handle($request);
+        try {
+            $this->unblockUserRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json(['success' => sprintf('Unblocked user %s', $payload['identifier'])], Response::HTTP_OK);
+        return $this->json(['success' => sprintf('Unblocked user %s', $payload['identifier'])]);
     }
 
     /**
@@ -190,11 +221,15 @@ class UserController extends AbstractController
      */
     public function remove(Request $request): Response
     {
-        $this->removeUserRequestHandler->handle($request);
+        try {
+            $this->removeUserRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json(['success' => sprintf('Removed user %s', $payload['identifier'])], Response::HTTP_OK);
+        return $this->json(['success' => sprintf('Removed user %s', $payload['identifier'])]);
     }
 
     /**
@@ -205,10 +240,14 @@ class UserController extends AbstractController
      */
     public function restore(Request $request): Response
     {
-        $this->restoreUserRequestHandler->handle($request);
+        try {
+            $this->restoreUserRequestHandler->handle($request);
+        } catch (\Exception $exception) {
+            return $this->json(['message' => $exception->getPrevious()->getMessage()]);
+        }
 
         $payload = $request->toArray();
 
-        return $this->json(['success' => sprintf('Restored user %s', $payload['identifier'])], Response::HTTP_OK);
+        return $this->json(['success' => sprintf('Restored user %s', $payload['identifier'])]);
     }
 }
