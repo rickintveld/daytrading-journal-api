@@ -7,6 +7,7 @@ use App\Infrastructure\RequestHandler\WithdrawRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -41,7 +42,7 @@ class ProfitController extends AbstractController
     {
         try {
             $this->addProfitRequestHandler->handle($request);
-        } catch (\Exception $exception) {
+        } catch (HandlerFailedException $exception) {
             return $this->json(['message' => $exception->getPrevious()->getMessage()]);
         }
 
@@ -59,7 +60,7 @@ class ProfitController extends AbstractController
     {
         try {
             $this->withdrawRequestHandler->handle($request);
-        } catch (\Exception $exception) {
+        } catch (HandlerFailedException $exception) {
             return $this->json(['message' => $exception->getPrevious()->getMessage()]);
         }
 
