@@ -5,8 +5,7 @@ namespace App\Application\CommandHandler;
 use App\Application\Command\CreateUserCommand;
 use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Entity\User;
-use App\Infrastructure\Entity\UserSettings;
+use App\Infrastructure\Infrastructure\Builder\UserBuilder;
 use App\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -21,14 +20,22 @@ class CreateUserCommandHandler implements CommandHandler
     /** @var \Doctrine\ORM\EntityManager */
     private $entityManager;
 
+    /** @var \App\Infrastructure\Infrastructure\Builder\UserBuilder */
+    private $userBuilder;
+
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
+     * @param \App\Infrastructure\Repository\UserRepository          $userRepository
+     * @param \Doctrine\ORM\EntityManagerInterface                   $entityManager
+     * @param \App\Infrastructure\Infrastructure\Builder\UserBuilder $userBuilder
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManager,
+        UserBuilder $userBuilder
+    ) {
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
+        $this->userBuilder = $userBuilder;
     }
 
     /**
@@ -55,20 +62,8 @@ class CreateUserCommandHandler implements CommandHandler
      */
     private function handle(CreateUserCommand $command): void
     {
-        $userSettings = new UserSettings();
-        $userSettings->setCapital($command->getCapital());
-
-        $newUser = new User();
-        $newUser
-            ->setFirstName($command->getFirstName())
-            ->setLastName($command->getLastName())
-            ->setEmail($command->getEmail())
-            ->setPassword($command->getPassword())
-            ->setUserSettings($userSettings)
-            ->setBlocked(false)
-            ->setRemoved(false);
-
-        $this->entityManager->persist($newUser);
+        $this->userBuilder->build($command->toArray());
+        $this->entityManager->persist($this->userBuilder->get());
         $this->entityManager->flush();
     }
 }

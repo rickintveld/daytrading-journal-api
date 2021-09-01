@@ -35,6 +35,11 @@ class Profit
      */
     private $createdAt;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     /**
      * @return int|null
      */

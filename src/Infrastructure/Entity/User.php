@@ -7,12 +7,13 @@ use App\Infrastructure\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -76,6 +77,10 @@ class User
     public function __construct()
     {
         $this->profits = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->blocked = false;
+        $this->removed = false;
     }
 
     /**

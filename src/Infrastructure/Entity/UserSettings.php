@@ -41,6 +41,12 @@ class UserSettings
      */
     private $updatedAt;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
     /**
      * @return int|null
      */
@@ -77,7 +83,7 @@ class UserSettings
     }
 
     /**
-     * @param int|null $capital
+     * @param \App\Infrastructure\Entity\int|null $capital
      * @return \App\Infrastructure\Entity\UserSettings
      */
     public function setCapital(?int $capital): self
