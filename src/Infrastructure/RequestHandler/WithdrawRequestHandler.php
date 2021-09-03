@@ -3,6 +3,7 @@
 namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\WithdrawCommand;
+use App\Common\Exception\InvalidArgumentException;
 use App\Common\Interfaces\Command;
 
 /**
@@ -18,7 +19,7 @@ class WithdrawRequestHandler extends RequestHandler
     {
         foreach (['userId', 'amount'] as $key) {
             if (!array_key_exists($key, $payload)) {
-                throw new \Exception(sprintf('No %s was found in the payload', $key));
+                throw new InvalidArgumentException(sprintf('No %s was found in the payload', $key));
             }
         }
     }

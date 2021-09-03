@@ -7,12 +7,13 @@ use App\Infrastructure\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -76,6 +77,10 @@ class User
     public function __construct()
     {
         $this->profits = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->blocked = false;
+        $this->removed = false;
     }
 
     /**
@@ -325,19 +330,25 @@ class User
         return $this;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function block(): void
     {
         if ($this->getRemoved()) {
-            throw new \Error('The user can not be blocked because of remove state');
+            throw new \Exception('The user can not be blocked because of remove state');
         }
 
         $this->setBlocked(true);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function unblock(): void
     {
         if ($this->getRemoved()) {
-            throw new \Error('The user can not be unblocked because of remove state, user should be restored');
+            throw new \Exception('The user can not be unblocked because of remove state, user should be restored');
         }
 
         $this->setBlocked(false);
@@ -382,7 +393,7 @@ class User
         if (!$this->isEqualTo($password, $this->getPassword())) {
             $this->setPassword($password);
         }
-        if (!$this->isEqualTo($capital, $this->getUserSettings()->getCapital())) {
+        if ($this->getUserSettings() && !$this->isEqualTo($capital, $this->getUserSettings()->getCapital())) {
             $this->getUserSettings()->setCapital($capital);
         }
     }

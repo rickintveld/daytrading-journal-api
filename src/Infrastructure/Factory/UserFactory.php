@@ -13,6 +13,7 @@ class UserFactory
     /**
      * @param \App\Infrastructure\Entity\User $user
      * @return \App\Domain\Model\User
+     * @throws \Exception
      */
     public function toDomainUser(User $user): DomainUser
     {

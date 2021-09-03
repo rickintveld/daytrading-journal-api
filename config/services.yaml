@@ -26,6 +26,9 @@ services:
       - "../src/Kernel.php"
       - "../src/Tests/"
 
+  App\Fixtures\:
+    resource: '../fixtures/*'
+
   App\Application\QueryHandler\:
       resource: '../src/Application/QueryHandler'
       autoconfigure: false

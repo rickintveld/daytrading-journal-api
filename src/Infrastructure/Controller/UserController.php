@@ -12,6 +12,7 @@ use App\Infrastructure\RequestHandler\RestoreUserRequestHandler;
 use App\Infrastructure\RequestHandler\UnblockUserRequestHandler;
 use App\Infrastructure\RequestHandler\UpdateUserRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
@@ -72,9 +73,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users", name="users", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function users(): Response
+    public function users(): JsonResponse
     {
         try {
             $users = $this->queryBus->query(new AllUsersQuery());
@@ -93,9 +94,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/blocked", name="blocked-users", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function blockedUsers(): Response
+    public function blockedUsers(): JsonResponse
     {
         try {
             $users = $this->queryBus->query(new AllUsersQuery(true, false));
@@ -114,9 +115,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/removed", name="removed-users", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function removedUsers(): Response
+    public function removedUsers(): JsonResponse
     {
         try {
             $users = $this->queryBus->query(new AllUsersQuery(false, true));
@@ -136,10 +137,9 @@ class UserController extends AbstractController
     /**
      * @Route("/user", name="user", methods={"GET"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws HandlerFailedException
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function user(Request $request): Response
+    public function user(Request $request): JsonResponse
     {
         $payload = $request->toArray();
 
@@ -163,9 +163,9 @@ class UserController extends AbstractController
      * @Route("/user/create", name="user-create", methods={"POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function create(Request $request): Response
+    public function create(Request $request): JsonResponse
     {
         try {
             $this->createUserRequestHandler->handle($request);
@@ -188,9 +188,9 @@ class UserController extends AbstractController
     /**
      * @Route("/user/update", name="user-update", methods={"PUT"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function update(Request $request): Response
+    public function update(Request $request): JsonResponse
     {
         try {
             $this->updateUserRequestHandler->handle($request);
@@ -213,9 +213,9 @@ class UserController extends AbstractController
      * @Route("/user/block", name="user-block", methods={"POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function block(Request $request): Response
+    public function block(Request $request): JsonResponse
     {
         try {
             $this->blockUserRequestHandler->handle($request);
@@ -238,9 +238,9 @@ class UserController extends AbstractController
      * @Route("/user/unblock", name="user-unblock", methods={"POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function unblock(Request $request): Response
+    public function unblock(Request $request): JsonResponse
     {
         try {
             $this->unblockUserRequestHandler->handle($request);
@@ -263,9 +263,9 @@ class UserController extends AbstractController
      * @Route("/user/remove", name="user-remove", methods={"POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function remove(Request $request): Response
+    public function remove(Request $request): JsonResponse
     {
         try {
             $this->removeUserRequestHandler->handle($request);
@@ -288,9 +288,9 @@ class UserController extends AbstractController
      * @Route("/user/restore", name="user-restore", methods={"POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function restore(Request $request): Response
+    public function restore(Request $request): JsonResponse
     {
         try {
             $this->restoreUserRequestHandler->handle($request);

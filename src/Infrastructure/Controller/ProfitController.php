@@ -5,6 +5,7 @@ namespace App\Infrastructure\Controller;
 use App\Infrastructure\RequestHandler\AddProfitRequestHandler;
 use App\Infrastructure\RequestHandler\WithdrawRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
@@ -36,9 +37,9 @@ class ProfitController extends AbstractController
     /**
      * @Route("/profit/add", name="profit-add", methods={"POST"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function add(Request $request): Response
+    public function add(Request $request): JsonResponse
     {
         try {
             $this->addProfitRequestHandler->handle($request);
@@ -60,9 +61,9 @@ class ProfitController extends AbstractController
     /**
      * @Route("/profit/withdraw", name="profit-withdraw", methods={"POST"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function withdraw(Request $request): Response
+    public function withdraw(Request $request): JsonResponse
     {
         try {
             $this->withdrawRequestHandler->handle($request);

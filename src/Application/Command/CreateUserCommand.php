@@ -79,4 +79,18 @@ class CreateUserCommand implements Command
     {
         return $this->password;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'capital' => $this->getCapital()
+        ];
+    }
 }

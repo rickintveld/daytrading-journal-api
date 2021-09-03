@@ -3,6 +3,7 @@
 namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\RemoveUserCommand;
+use App\Common\Exception\InvalidUserStateException;
 use App\Common\Interfaces\Command;
 
 /**
@@ -17,7 +18,7 @@ class RemoveUserRequestHandler extends RequestHandler
     protected function validatePayload(array $payload): void
     {
         if (!array_key_exists('identifier', $payload)) {
-            throw new \Exception('No identifier was found in the payload');
+            throw new InvalidUserStateException('No identifier was found in the payload');
         }
     }
 

@@ -41,6 +41,12 @@ class UserSettings
      */
     private $updatedAt;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
     /**
      * @return int|null
      */

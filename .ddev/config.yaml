@@ -1,4 +1,4 @@
-name: trading-api
+name: daytrading-journal-api
 type: php
 docroot: public
 php_version: "7.4"
@@ -13,6 +13,10 @@ mysql_version: ""
 provider: default
 use_dns_when_possible: true
 composer_version: "2"
+hooks:
+  post-start:
+    - exec-host: "composer install"
+
 # This config.yaml was created with ddev version v1.16.7
 # webimage: drud/ddev-webserver:v1.16.7
 # dbimage: drud/ddev-dbserver-mariadb-10.2:v1.16.0
@@ -166,4 +170,4 @@ composer_version: "2"
 # See https://ddev.readthedocs.io/en/stable/users/extending-commands/ for more
 # information on the commands that can be extended and the tasks you can define
 # for them. Example:
-#hooks:
+

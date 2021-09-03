@@ -3,6 +3,7 @@
 namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\UnBlockUserCommand;
+use App\Common\Exception\InvalidArgumentException;
 use App\Common\Interfaces\Command;
 
 /**
@@ -17,7 +18,7 @@ class UnblockUserRequestHandler extends RequestHandler
     protected function validatePayload(array $payload): void
     {
         if (!array_key_exists('identifier', $payload)) {
-            throw new \Exception('No identifier was found in the payload');
+            throw new InvalidArgumentException('No identifier was found in the payload');
         }
     }
 

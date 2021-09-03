@@ -3,6 +3,7 @@
 namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\UpdateUserCommand;
+use App\Common\Exception\InvalidArgumentException;
 use App\Common\Interfaces\Command;
 
 /**
@@ -16,9 +17,9 @@ class UpdateUserRequestHandler extends RequestHandler
      */
     protected function validatePayload(array $payload): void
     {
-        foreach (['email', 'firstName', 'lastName', 'capital', 'password'] as $key) {
+        foreach (['userId', 'email', 'firstName', 'lastName', 'capital', 'password'] as $key) {
             if (!array_key_exists($key, $payload)) {
-                throw new \Exception(sprintf('No %s was found in the payload', $key));
+                throw new InvalidArgumentException(sprintf('No %s was found in the payload', $key));
             }
         }
     }
@@ -31,6 +32,7 @@ class UpdateUserRequestHandler extends RequestHandler
     protected function createCommand(array $payload): Command
     {
         return new UpdateUserCommand(
+            $payload['userId'],
             $payload['email'],
             $payload['firstName'],
             $payload['lastName'],
