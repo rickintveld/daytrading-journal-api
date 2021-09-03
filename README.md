@@ -32,3 +32,8 @@ Then you should execute `php bin/console messenger:consume async -vv` to start t
 | Restore a user    | `/user/restore`    | `identifier`                                            | `POST`  |
 | Add profit        | `/profit/add`      | `userId`, `profit`                                      | `POST`  |
 | Withdraw profit   | `/profit/withdraw` | `userId`, `amount`                                      | `POST`  |
+
+#
+##### Tests
+
+To execute the test you have to access the web container first, `ddev ssh`. Then you should execute the php unit command `./bin/phpunit`
