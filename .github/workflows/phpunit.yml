@@ -9,7 +9,7 @@ jobs:
       - uses: php-actions/composer@v2
 
       - name: PHPUnit Tests
-        uses: php-actions/phpunit@8
+        uses: php-actions/phpunit@v2
         env:
           TEST_NAME: Scarlett
         with:
