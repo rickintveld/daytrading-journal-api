@@ -11,5 +11,5 @@ jobs:
       - name: Upload
         uses: codecov/codecov-action@v1
         with:
-          files: ./tests
+          files: tests
           token: 2765af24-3ab9-4f3b-863c-b1c04d60f582'
