@@ -1,4 +1,7 @@
 # Daytrading journal API
+[![Build Status](https://travis-ci.org/rickintveld/daytrading-journal-api.svg?branch=master)](https://travis-ci.org/rickintveld/daytrading-journal-api)
+[![codecov](https://codecov.io/gh/rickone1/daytrading-journal-api/branch/master/graph/badge.svg)](https://codecov.io/gh/rickone1/daytrading-journal-api)
+
 *Day trading journal API for keeping track of the profits.*
 
 #### Start the application
