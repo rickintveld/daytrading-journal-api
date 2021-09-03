@@ -1,19 +1,11 @@
 name: PHPunit
 on: pull_request
 jobs:
-  build-test:
+  phpunit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: php-actions/composer@v2
-        with:
-          args: --no-interaction --no-progress
-
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@v2
-        env:
-          TEST_NAME: TradingJournalAPI
+      - uses: actions/checkout@v1
+      - uses: pxgamer/phpunit-action@master
         with:
           bootstrap: vendor/autoload.php
-          configuration: phpunit.xml
+            configuration: phpunit.xml
