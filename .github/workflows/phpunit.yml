@@ -13,8 +13,7 @@ jobs:
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         env:
-          TEST_NAME: Scarlett
+          TEST_NAME: TradingJournalAPI
         with:
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
-          args: --coverage-text
