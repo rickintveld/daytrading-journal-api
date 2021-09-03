@@ -80,6 +80,9 @@ class CreateUserCommand implements Command
         return $this->password;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [

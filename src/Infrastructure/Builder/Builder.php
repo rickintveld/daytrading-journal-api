@@ -7,6 +7,5 @@ namespace App\Infrastructure\Builder;
  */
 interface Builder
 {
-    public function build(array $arguments): void;
-    public function get();
+    public function build(array $arguments);
 }

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Infrastructure\Infrastructure\Builder;
+namespace App\Infrastructure\Builder;
 
-use App\Infrastructure\Builder\Builder;
 use App\Infrastructure\Entity\User;
 use App\Infrastructure\Entity\UserSettings;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Class UserBuilder
- * @package App\Infrastructure\Infrastructure\Builder
+ * @package App\Infrastructure\Builder
  */
 class UserBuilder implements Builder
 {
@@ -30,44 +29,43 @@ class UserBuilder implements Builder
 
     /**
      * @param array $arguments
+     * @return \App\Infrastructure\Entity\User
      */
-    public function build(array $arguments): void
+    public function build(array $arguments): User
     {
         $this->user
             ->setFirstName($arguments['firstName'])
             ->setLastName($arguments['lastName'])
             ->setEmail($arguments['email']);
 
-        $this->buildUserSettings($arguments);
-        $this->hashPassword($arguments);
-    }
+        if (isset($arguments['capital'])) {
+            $this->buildUserSettings($arguments['capital']);
+        }
+        if (isset($arguments['password'])) {
+            $this->hashPassword($arguments['password']);
+        }
 
-    /**
-     * @return \App\Infrastructure\Entity\User
-     */
-    public function get(): User
-    {
         return $this->user;
     }
 
     /**
-     * @param array $arguments
+     * @param int $capital
      */
-    private function buildUserSettings(array $arguments): void
+    private function buildUserSettings(int $capital): void
     {
         $userSettings = new UserSettings();
-        $userSettings->setCapital($arguments['capital'] ?: 0);
+        $userSettings->setCapital($capital);
 
         $this->user->setUserSettings($userSettings);
     }
 
     /**
-     * @param array $arguments
+     * @param string $password
      */
-    private function hashPassword(array $arguments): void
+    private function hashPassword(string $password): void
     {
         $this->user->setPassword(
-            $this->passwordHasher->hashPassword($this->user, $arguments['password'])
+            $this->passwordHasher->hashPassword($this->user, $password)
         );
     }
 }

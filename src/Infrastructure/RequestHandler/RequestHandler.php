@@ -34,7 +34,14 @@ abstract class RequestHandler
         $this->commandBus->dispatch($this->createCommand($payload));
     }
 
+    /**
+     * @param array $payload
+     */
     abstract protected function validatePayload(array $payload): void;
 
+    /**
+     * @param array $payload
+     * @return \App\Common\Interfaces\Command
+     */
     abstract protected function createCommand(array $payload): Command;
 }

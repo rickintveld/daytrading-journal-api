@@ -3,9 +3,10 @@
 namespace App\Application\CommandHandler;
 
 use App\Application\Command\CreateUserCommand;
+use App\Common\Exception\UserAlreadyExists;
 use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Infrastructure\Builder\UserBuilder;
+use App\Infrastructure\Builder\UserBuilder;
 use App\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -20,13 +21,13 @@ class CreateUserCommandHandler implements CommandHandler
     /** @var \Doctrine\ORM\EntityManager */
     private $entityManager;
 
-    /** @var \App\Infrastructure\Infrastructure\Builder\UserBuilder */
+    /** @var \App\Infrastructure\Builder\UserBuilder */
     private $userBuilder;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository          $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface                   $entityManager
-     * @param \App\Infrastructure\Infrastructure\Builder\UserBuilder $userBuilder
+     * @param \App\Infrastructure\Repository\UserRepository $userRepository
+     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
+     * @param \App\Infrastructure\Builder\UserBuilder       $userBuilder
      */
     public function __construct(
         UserRepository $userRepository,
@@ -42,14 +43,14 @@ class CreateUserCommandHandler implements CommandHandler
      * @param \App\Application\Command\CreateUserCommand $command
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Exception
+     * @throws UserAlreadyExists
      */
     public function __invoke(CreateUserCommand $command): void
     {
         $user = $this->userRepository->findOneBy(['email' => $command->getEmail()]);
 
         if ($user) {
-            throw new UserNotFoundException('User already exists');
+            throw new UserAlreadyExists('User already exists');
         }
 
         $this->handle($command);
@@ -62,8 +63,7 @@ class CreateUserCommandHandler implements CommandHandler
      */
     private function handle(CreateUserCommand $command): void
     {
-        $this->userBuilder->build($command->toArray());
-        $this->entityManager->persist($this->userBuilder->get());
+        $this->entityManager->persist($this->userBuilder->build($command->toArray()));
         $this->entityManager->flush();
     }
 }

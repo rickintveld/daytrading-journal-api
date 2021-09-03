@@ -330,19 +330,25 @@ class User implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function block(): void
     {
         if ($this->getRemoved()) {
-            throw new \Error('The user can not be blocked because of remove state');
+            throw new \Exception('The user can not be blocked because of remove state');
         }
 
         $this->setBlocked(true);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function unblock(): void
     {
         if ($this->getRemoved()) {
-            throw new \Error('The user can not be unblocked because of remove state, user should be restored');
+            throw new \Exception('The user can not be unblocked because of remove state, user should be restored');
         }
 
         $this->setBlocked(false);
@@ -387,7 +393,7 @@ class User implements PasswordAuthenticatedUserInterface
         if (!$this->isEqualTo($password, $this->getPassword())) {
             $this->setPassword($password);
         }
-        if (!$this->isEqualTo($capital, $this->getUserSettings()->getCapital())) {
+        if ($this->getUserSettings() && !$this->isEqualTo($capital, $this->getUserSettings()->getCapital())) {
             $this->getUserSettings()->setCapital($capital);
         }
     }

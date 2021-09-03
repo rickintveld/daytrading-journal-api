@@ -56,6 +56,7 @@ class User
      * @param bool                       $removed
      * @param \DateTimeImmutable         $createdAt
      * @param \DateTimeImmutable         $updatedAt
+     * @throws \Exception
      */
     public function __construct(
         int $id,
@@ -65,10 +66,10 @@ class User
         string $lastName,
         float $capital,
         array $profits,
-        bool $blocked,
-        bool $removed,
-        \DateTimeImmutable $createdAt,
-        \DateTimeImmutable $updatedAt
+        bool $blocked = false,
+        bool $removed = false,
+        \DateTimeImmutable $createdAt = null,
+        \DateTimeImmutable $updatedAt = null
     ) {
         $this->id = $id;
         $this->email = $email;
@@ -79,8 +80,8 @@ class User
         $this->profits = $profits;
         $this->blocked = $blocked;
         $this->removed = $removed;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt ?: new \DateTimeImmutable();
+        $this->updatedAt = $updatedAt ?: new \DateTimeImmutable();
     }
 
     /**
@@ -369,7 +370,7 @@ class User
     /**
      * @return float
      */
-    public function getMoney(): float
+    public function getCapital(): float
     {
         $startCapital = $this->getStartCapital();
         $profits = array_map(

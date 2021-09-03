@@ -4,6 +4,7 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\CreateUserCommand;
 use App\Common\Interfaces\Command;
+use \App\Common\Exception\InvalidArgumentException;
 
 /**
  * @package App\Infrastructure\RequestHandler
@@ -18,7 +19,7 @@ class CreateUserRequestHandler extends RequestHandler
     {
         foreach (['email', 'firstName', 'lastName', 'capital', 'password'] as $key) {
             if (!array_key_exists($key, $payload)) {
-                throw new \Exception(sprintf('No %s was found in the payload', $key));
+                throw new InvalidArgumentException(sprintf('No %s was found in the payload', $key));
             }
         }
     }

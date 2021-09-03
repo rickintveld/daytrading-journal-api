@@ -83,7 +83,7 @@ class UserSettings
     }
 
     /**
-     * @param \App\Infrastructure\Entity\int|null $capital
+     * @param int|null $capital
      * @return \App\Infrastructure\Entity\UserSettings
      */
     public function setCapital(?int $capital): self

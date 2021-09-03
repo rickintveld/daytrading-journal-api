@@ -4,6 +4,7 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\BlockUserCommand;
 use App\Common\Interfaces\Command;
+use \App\Common\Exception\InvalidArgumentException;
 
 /**
  * @package App\Infrastructure\RequestHandler
@@ -17,7 +18,7 @@ class BlockUserRequestHandler extends RequestHandler
     protected function validatePayload(array $payload): void
     {
         if (!array_key_exists('identifier', $payload)) {
-            throw new \Exception('No identifier was found in the payload');
+            throw new InvalidArgumentException('No identifier was found in the payload');
         }
     }
 

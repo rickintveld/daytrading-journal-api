@@ -31,9 +31,7 @@ class FindUserQueryHandler implements MessageHandlerInterface
      * @param \App\Application\Query\FindUserQuery $query
      * @return \App\Domain\Model\User
      *
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
      */
     public function __invoke(FindUserQuery $query)
     {
@@ -44,18 +42,10 @@ class FindUserQueryHandler implements MessageHandlerInterface
      * @param \App\Application\Query\FindUserQuery $query
      * @return \App\Domain\Model\User
      *
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
      */
     private function query(FindUserQuery $query): DomainUser
     {
-        $user = $this->userRepository->findOneByIdentifier($query->getUserId());
-
-        if (!$user) {
-            throw new UserNotFoundException(sprintf('No user found for id %s', $query->getUserId()));
-        }
-
-        return $user;
+        return $this->userRepository->findOneByIdentifier($query->getUserId());
     }
 }
