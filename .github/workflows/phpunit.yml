@@ -8,7 +8,7 @@ jobs:
 
       - uses: php-actions/composer@v2
         with:
-          - args: --no-interaction --no-progress
+          args: --no-interaction --no-progress
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
