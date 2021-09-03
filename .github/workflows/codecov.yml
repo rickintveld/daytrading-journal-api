@@ -1,7 +1,7 @@
 name: Codecov
 on: pull_request
 jobs:
-  run:
+  code-coverage:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch
@@ -12,4 +12,4 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           files: tests
-          token: 2765af24-3ab9-4f3b-863c-b1c04d60f582'
+          token: 2765af24-3ab9-4f3b-863c-b1c04d60f582
