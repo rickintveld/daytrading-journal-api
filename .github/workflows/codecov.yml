@@ -6,6 +6,10 @@ jobs:
     steps:
       - name: Fetch
         uses: actions/checkout@master
+      - name: Composer
+        uses: php-actions/composer@v2
+          with:
+            args: --no-interaction --no-progress
       - name: Test
         run: phpunit --coverage-html build/coverage-report --configuration phpunit.xml --coverage-clover=coverage.xml
       - name: Upload
