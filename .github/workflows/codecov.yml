@@ -4,10 +4,8 @@ jobs:
   code-coverage:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch
-        uses: actions/checkout@master
-      - name: Composer
-        uses: php-actions/composer@v2
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v2
           with:
             args: --no-interaction --no-progress
       - name: Test

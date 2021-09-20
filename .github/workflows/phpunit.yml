@@ -5,11 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - uses: php-actions/composer@v2
         with:
           args: --no-interaction --no-progress
-
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         env:
