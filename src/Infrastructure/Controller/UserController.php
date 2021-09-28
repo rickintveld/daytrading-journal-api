@@ -18,16 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    /** @var \App\Common\Interfaces\QueryBus */
-    private $queryBus;
+    private QueryBus $queryBus;
+    private UserRequestHandlerInterface $userRequestHandler;
 
-    /** @var \App\Infrastructure\RequestHandler\UserRequestHandlerInterface */
-    private $userRequestHandler;
-
-    /**
-     * @param \App\Common\Interfaces\QueryBus                                $queryBus
-     * @param \App\Infrastructure\RequestHandler\UserRequestHandlerInterface $userRequestHandler
-     */
     public function __construct(QueryBus $queryBus, UserRequestHandlerInterface $userRequestHandler) {
         $this->queryBus = $queryBus;
         $this->userRequestHandler = $userRequestHandler;

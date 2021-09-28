@@ -14,11 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class RestoreUserCommandHandler implements CommandHandler
 {
-    /** @var \App\Infrastructure\Repository\UserRepository */
-    private $userRepository;
-
-    /** @var \Doctrine\ORM\EntityManagerInterface */
-    private $entityManager;
+    private UserRepository $userRepository;
+    private EntityManagerInterface $entityManager;
 
     /**
      * @param \App\Infrastructure\Repository\UserRepository $userRepository

@@ -9,20 +9,15 @@ use App\Common\Interfaces\Command;
  */
 class CreateUserCommand implements Command
 {
-    /** @var string */
-    private $email;
+    private string $email;
 
-    /** @var string */
-    private $firstName;
+    private string $firstName;
 
-    /** @var string */
-    private $lastName;
+    private string $lastName;
 
-    /** @var int */
-    private $capital;
+    private int $capital;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
     /**
      * @param string $email

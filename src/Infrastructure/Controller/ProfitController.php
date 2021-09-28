@@ -15,15 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProfitController extends AbstractController
 {
-    /** @var \App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface */
-    private $profitRequestHandler;
+    private ProfitRequestHandlerInterface $profitRequestHandler;
 
-    /**
-     * @param \App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface $profitRequestHandler
-     */
-    public function __construct(
-        ProfitRequestHandlerInterface $profitRequestHandler
-    ) {
+    public function __construct(ProfitRequestHandlerInterface $profitRequestHandler)
+    {
         $this->profitRequestHandler = $profitRequestHandler;
     }
 

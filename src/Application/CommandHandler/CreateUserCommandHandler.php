@@ -15,14 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class CreateUserCommandHandler implements CommandHandler
 {
-    /** @var \App\Infrastructure\Repository\UserRepository */
-    private $userRepository;
-
-    /** @var \Doctrine\ORM\EntityManagerInterface */
-    private $entityManager;
-
-    /** @var \App\Infrastructure\Builder\UserBuilder */
-    private $userBuilder;
+    private UserRepository $userRepository;
+    private EntityManagerInterface $entityManager;
+    private UserBuilder $userBuilder;
 
     /**
      * @param \App\Infrastructure\Repository\UserRepository $userRepository

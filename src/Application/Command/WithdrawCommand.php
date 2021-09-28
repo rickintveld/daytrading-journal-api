@@ -9,11 +9,9 @@ use App\Common\Interfaces\Command;
  */
 class WithdrawCommand implements Command
 {
-    /** @var int */
-    private $userId;
+    private int $userId;
 
-    /** @var float */
-    private $amount;
+    private float $amount;
 
     /**
      * @param int   $userId

@@ -9,8 +9,7 @@ use App\Common\Interfaces\Command;
  */
 class BlockUserCommand implements Command
 {
-    /** @var int */
-    private $identifier;
+    private int $identifier;
 
     /**
      * @param int $identifier

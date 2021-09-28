@@ -17,8 +17,7 @@ use \App\Domain\Model\User as DomainUser;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    /** @var \App\Infrastructure\Factory\UserFactory */
-    private $userFactory;
+    private UserFactory $userFactory;
 
     /**
      * UserRepository constructor.

@@ -39,7 +39,7 @@ class UserSettings
      * @Ignore
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updatedAt;
+    private \DateTimeImmutable $updatedAt;
 
     public function __construct()
     {

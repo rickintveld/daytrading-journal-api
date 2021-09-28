@@ -9,11 +9,8 @@ use App\Common\Interfaces\Query;
  */
 class AllUsersQuery implements Query
 {
-    /** @var boolean */
-    private $isBlocked;
-
-    /** @var boolean */
-    private $isRemoved;
+    private bool $isBlocked;
+    private bool $isRemoved;
 
     /**
      * AllUsersQuery constructor.
