@@ -72,7 +72,7 @@ class User implements PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Profit::class, mappedBy="user", cascade={"persist"})
      */
-    private array $profits;
+    private ArrayCollection $profits;
 
     public function __construct()
     {
