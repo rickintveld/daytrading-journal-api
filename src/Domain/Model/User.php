@@ -10,38 +10,28 @@ use App\Common\Exception\InvalidUserStateException;
  */
 class User
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var string */
-    private $email;
+    private string $email;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
-    /** @var string */
-    private $firstName;
+    private string $firstName;
 
-    /** @var string */
-    private $lastName;
+    private string $lastName;
 
-    /** @var float */
-    private $startCapital;
+    private float $startCapital;
 
     /** @var \App\Domain\Model\Profit[] */
-    private $profits;
+    private array $profits;
 
-    /** @var bool */
-    private $blocked;
+    private bool $blocked;
 
-    /** @var bool */
-    private $removed;
+    private bool $removed;
 
-    /** @var \DateTimeImmutable */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
-    /** @var \DateTimeImmutable */
-    private $updatedAt;
+    private \DateTimeImmutable $updatedAt;
 
     /**
      * User constructor.
