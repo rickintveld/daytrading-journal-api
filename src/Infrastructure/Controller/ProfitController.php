@@ -2,8 +2,7 @@
 
 namespace App\Infrastructure\Controller;
 
-use App\Infrastructure\RequestHandler\AddProfitRequestHandler;
-use App\Infrastructure\RequestHandler\WithdrawRequestHandler;
+use App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,22 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProfitController extends AbstractController
 {
-    /** @var \App\Infrastructure\RequestHandler\AddProfitRequestHandler */
-    private $addProfitRequestHandler;
-
-    /** @var \App\Infrastructure\RequestHandler\WithdrawRequestHandler */
-    private $withdrawRequestHandler;
+    /** @var \App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface */
+    private $profitRequestHandler;
 
     /**
-     * @param \App\Infrastructure\RequestHandler\AddProfitRequestHandler $addProfitRequestHandler
-     * @param \App\Infrastructure\RequestHandler\WithdrawRequestHandler  $withdrawRequestHandler
+     * @param \App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface $profitRequestHandler
      */
     public function __construct(
-        AddProfitRequestHandler $addProfitRequestHandler,
-        WithdrawRequestHandler $withdrawRequestHandler
+        ProfitRequestHandlerInterface $profitRequestHandler
     ) {
-        $this->addProfitRequestHandler = $addProfitRequestHandler;
-        $this->withdrawRequestHandler = $withdrawRequestHandler;
+        $this->profitRequestHandler = $profitRequestHandler;
     }
 
     /**
@@ -42,7 +35,7 @@ class ProfitController extends AbstractController
     public function add(Request $request): JsonResponse
     {
         try {
-            $this->addProfitRequestHandler->handle($request);
+            $this->profitRequestHandler->add($request);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -66,7 +59,7 @@ class ProfitController extends AbstractController
     public function withdraw(Request $request): JsonResponse
     {
         try {
-            $this->withdrawRequestHandler->handle($request);
+            $this->profitRequestHandler->withdraw($request);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,

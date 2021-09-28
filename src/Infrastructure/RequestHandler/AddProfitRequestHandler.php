@@ -4,7 +4,7 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\AddProfitCommand;
 use App\Common\Interfaces\Command;
-use \App\Common\Exception\InvalidArgumentException;
+use App\Common\Exception\InvalidArgumentException;
 
 /**
  * @package App\Infrastructure\RequestHandler
