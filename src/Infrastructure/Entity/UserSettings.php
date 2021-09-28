@@ -16,24 +16,24 @@ class UserSettings
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @Ignore()
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="userSettings", cascade={"persist", "remove"})
      */
-    private $user;
+    private User $user;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $capital;
+    private int $capital;
 
     /**
      * @Ignore
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     /**
      * @Ignore

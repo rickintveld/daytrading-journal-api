@@ -16,24 +16,24 @@ class Profit
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @Ignore()
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="profits")
      */
-    private $user;
+    private User $user;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $amount;
+    private float $amount;
 
     /**
      * @Ignore
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     public function __construct()
     {
