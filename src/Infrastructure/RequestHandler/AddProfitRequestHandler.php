@@ -12,7 +12,7 @@ use App\Common\Exception\InvalidArgumentException;
 class AddProfitRequestHandler extends RequestHandler
 {
     /**
-     * @param array $payload
+     * @param array{userId: int, profit: float} $payload
      * @throws InvalidArgumentException
      */
     protected function validatePayload(array $payload): void
@@ -25,11 +25,11 @@ class AddProfitRequestHandler extends RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array{userId: int, profit: float} $payload
      * @return \App\Common\Interfaces\Command
      */
     protected function createCommand(array $payload): Command
     {
-        return new AddProfitCommand($payload['userId'], $payload['profit']);
+        return new AddProfitCommand((int)$payload['userId'], (float)$payload['profit']);
     }
 }

@@ -81,7 +81,7 @@ class CreateUserCommand implements Command
     }
 
     /**
-     * @return array
+     * @return array<string, int|string>
      */
     public function toArray(): array
     {

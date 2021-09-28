@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    /** @var \App\Common\Bus\MessengerQueryBus */
+    /** @var \App\Common\Interfaces\QueryBus */
     private $queryBus;
 
     /** @var \App\Infrastructure\RequestHandler\UserRequestHandlerInterface */

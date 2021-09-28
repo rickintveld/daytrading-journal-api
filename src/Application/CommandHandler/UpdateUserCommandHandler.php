@@ -17,7 +17,7 @@ class UpdateUserCommandHandler implements CommandHandler
     /** @var \App\Infrastructure\Repository\UserRepository */
     private $userRepository;
 
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
     /**
@@ -32,9 +32,7 @@ class UpdateUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\UpdateUserCommand $command
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Exception
+     * @throws \App\Common\Exception\UserNotFoundException
      */
     public function __invoke(UpdateUserCommand $command): void
     {
@@ -50,8 +48,6 @@ class UpdateUserCommandHandler implements CommandHandler
     /**
      * @param \App\Application\Command\UpdateUserCommand $command
      * @param \App\Infrastructure\Entity\User            $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(UpdateUserCommand $command, User $user): void
     {

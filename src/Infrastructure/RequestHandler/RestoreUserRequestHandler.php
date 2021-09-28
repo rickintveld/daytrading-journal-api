@@ -12,7 +12,7 @@ use App\Common\Interfaces\Command;
 class RestoreUserRequestHandler extends RequestHandler
 {
     /**
-     * @param array $payload
+     * @param array<int> $payload
      * @throws \Exception
      */
     protected function validatePayload(array $payload): void
@@ -23,7 +23,7 @@ class RestoreUserRequestHandler extends RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array<int> $payload
      * @return \App\Common\Interfaces\Command
      * @throws \Exception
      */

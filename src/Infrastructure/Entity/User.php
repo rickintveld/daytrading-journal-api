@@ -20,59 +20,59 @@ class User implements PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstName;
+    private string $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastName;
+    private string $lastName;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $blocked;
+    private bool $blocked;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $removed;
+    private bool $removed;
 
     /**
      * @Ignore
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     /**
      * @Ignore
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updatedAt;
+    private \DateTimeImmutable $updatedAt;
 
     /**
      * @ORM\OneToOne(targetEntity=UserSettings::class, mappedBy="user", cascade={"persist", "remove"})
      */
-    private $userSettings;
+    private UserSettings $userSettings;
 
     /**
      * @ORM\OneToMany(targetEntity=Profit::class, mappedBy="user", cascade={"persist"})
      */
-    private $profits;
+    private array $profits;
 
     public function __construct()
     {
@@ -377,9 +377,9 @@ class User implements PasswordAuthenticatedUserInterface
      * @param string $lastName
      * @param string $email
      * @param string $password
-     * @param float  $capital
+     * @param int    $capital
      */
-    public function update(string $firstName, string $lastName, string $email, string $password, float $capital): void
+    public function update(string $firstName, string $lastName, string $email, string $password, int $capital): void
     {
         if (!$this->isEqualTo($firstName, $this->getFirstName())) {
             $this->setFirstName($firstName);
@@ -399,8 +399,8 @@ class User implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param $value
-     * @param $match
+     * @param int|string|float|object $value
+     * @param int|string|float|object $match
      * @return bool
      */
     protected function isEqualTo($value, $match): bool

@@ -18,7 +18,7 @@ class AddProfitCommandHandler implements CommandHandler
     /** @var \App\Infrastructure\Repository\UserRepository */
     private $userRepository;
 
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
     /**
@@ -49,8 +49,7 @@ class AddProfitCommandHandler implements CommandHandler
     /**
      * @param \App\Application\Command\AddProfitCommand $command
      * @param \App\Infrastructure\Entity\User           $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     private function handle(AddProfitCommand $command, User $user): void
     {

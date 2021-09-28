@@ -237,9 +237,9 @@ class User
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param \DateTimeImmutable $createdAt
      */
-    public function setCreatedAt(\DateTime $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -253,9 +253,9 @@ class User
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param \DateTimeImmutable $updatedAt
      */
-    public function setUpdatedAt(\DateTime $updatedAt): void
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -267,7 +267,7 @@ class User
      */
     public function withdraw(float $amount): self
     {
-        if ($this->getStartCapital() === null) {
+        if (!$this->getStartCapital()) {
             throw new InvalidFundsException(sprintf('Not enough money to withdraw %s', $amount));
         }
         if ($this->getStartCapital() < $amount) {
@@ -350,8 +350,8 @@ class User
     }
 
     /**
-     * @param $value
-     * @param $match
+     * @param int|string|float|object $value
+     * @param int|string|float|object $match
      * @return bool
      */
     protected function isEqualTo($value, $match): bool

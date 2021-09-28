@@ -17,7 +17,7 @@ class RestoreUserCommandHandler implements CommandHandler
     /** @var \App\Infrastructure\Repository\UserRepository */
     private $userRepository;
 
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
     /**
@@ -47,8 +47,6 @@ class RestoreUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Infrastructure\Entity\User $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(User $user): void
     {

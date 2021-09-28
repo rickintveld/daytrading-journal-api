@@ -28,7 +28,7 @@ class UserBuilder implements Builder
     }
 
     /**
-     * @param array $arguments
+     * @param array<string, string|int> $arguments
      * @return \App\Infrastructure\Entity\User
      */
     public function build(array $arguments): User

@@ -17,7 +17,7 @@ class BlockUserCommandHandler implements CommandHandler
     /** @var \App\Infrastructure\Repository\UserRepository */
     private $userRepository;
 
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
     /**
@@ -47,8 +47,7 @@ class BlockUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Infrastructure\Entity\User $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     private function handle(User $user): void
     {

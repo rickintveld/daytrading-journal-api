@@ -7,5 +7,9 @@ namespace App\Infrastructure\Builder;
  */
 interface Builder
 {
+    /**
+     * @param array<mixed> $arguments
+     * @return mixed
+     */
     public function build(array $arguments);
 }

@@ -12,7 +12,7 @@ use \App\Common\Exception\InvalidArgumentException;
 class CreateUserRequestHandler extends RequestHandler
 {
     /**
-     * @param array $payload
+     * @param array{email: string, firstName: string, lastName: string, capital: float, password: string} $payload
      * @throws \Exception
      */
     protected function validatePayload(array $payload): void
@@ -25,7 +25,7 @@ class CreateUserRequestHandler extends RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array{email: string, firstName: string, lastName: string, capital: int, password: string} $payload
      * @return \App\Common\Interfaces\Command
      * @throws \Exception
      */
@@ -35,7 +35,7 @@ class CreateUserRequestHandler extends RequestHandler
             $payload['email'],
             $payload['firstName'],
             $payload['lastName'],
-            $payload['capital'],
+            (int)$payload['capital'],
             $payload['password']
         );
     }

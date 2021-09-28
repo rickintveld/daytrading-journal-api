@@ -17,7 +17,7 @@ class WithdrawCommandHandler implements CommandHandler
     /** @var \App\Infrastructure\Repository\UserRepository */
     private $userRepository;
 
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
     /**
@@ -48,8 +48,6 @@ class WithdrawCommandHandler implements CommandHandler
     /**
      * @param \App\Application\Command\WithdrawCommand $command
      * @param \App\Infrastructure\Entity\User          $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \App\Common\Exception\InvalidFundsException
      */
     private function handle(WithdrawCommand $command, User $user): void

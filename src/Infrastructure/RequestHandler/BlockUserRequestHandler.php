@@ -12,7 +12,7 @@ use \App\Common\Exception\InvalidArgumentException;
 class BlockUserRequestHandler extends RequestHandler
 {
     /**
-     * @param array $payload
+     * @param array<int> $payload
      * @throws \Exception
      */
     protected function validatePayload(array $payload): void
@@ -23,7 +23,7 @@ class BlockUserRequestHandler extends RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array<int> $payload
      * @return \App\Common\Interfaces\Command
      * @throws \Exception
      */
