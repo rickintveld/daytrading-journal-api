@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Infrastructure\Entity;
+namespace App\Tests\Domain\Model;
 
 use App\Common\Exception\InvalidFundsException;
 use App\Common\Exception\InvalidUserStateException;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class UserTest
- * @package App\Tests\Infrastructure\Entity
+ * @package App\Tests\Domain\Model
  */
 class UserTest extends TestCase
 {
