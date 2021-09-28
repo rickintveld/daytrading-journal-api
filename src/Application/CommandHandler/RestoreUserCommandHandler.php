@@ -14,11 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class RestoreUserCommandHandler implements CommandHandler
 {
-    /** @var \App\Infrastructure\Repository\UserRepository */
-    private $userRepository;
-
-    /** @var \Doctrine\ORM\EntityManager */
-    private $entityManager;
+    private UserRepository $userRepository;
+    private EntityManagerInterface $entityManager;
 
     /**
      * @param \App\Infrastructure\Repository\UserRepository $userRepository
@@ -47,8 +44,6 @@ class RestoreUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Infrastructure\Entity\User $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(User $user): void
     {

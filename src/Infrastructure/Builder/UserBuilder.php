@@ -12,15 +12,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class UserBuilder implements Builder
 {
-    /** @var User */
-    private $user;
+    private User $user;
 
-    /** @var \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface */
-    private $passwordHasher;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    /**
-     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $passwordHasher
-     */
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         $this->user = new User();
@@ -28,7 +23,7 @@ class UserBuilder implements Builder
     }
 
     /**
-     * @param array $arguments
+     * @param array<string, string|int> $arguments
      * @return \App\Infrastructure\Entity\User
      */
     public function build(array $arguments): User

@@ -7,11 +7,9 @@ namespace App\Domain\Model;
  */
 class Profit
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var float */
-    private $amount;
+    private float $amount;
 
     /**
      * @param int   $id

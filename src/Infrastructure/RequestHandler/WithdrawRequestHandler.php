@@ -12,7 +12,7 @@ use App\Common\Interfaces\Command;
 class WithdrawRequestHandler extends RequestHandler
 {
     /**
-     * @param array $payload
+     * @param array{userId: int, amount: float} $payload
      * @throws \Exception
      */
     protected function validatePayload(array $payload): void
@@ -25,12 +25,12 @@ class WithdrawRequestHandler extends RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array{userId: int, amount: float} $payload
      * @return \App\Common\Interfaces\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command
     {
-        return new WithdrawCommand($payload['userId'], $payload['amount']);
+        return new WithdrawCommand((int)$payload['userId'], (float)$payload['amount']);
     }
 }

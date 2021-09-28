@@ -12,7 +12,7 @@ use App\Common\Interfaces\Command;
 class UpdateUserRequestHandler extends RequestHandler
 {
     /**
-     * @param array $payload
+     * @param array<string, int|string> $payload
      * @throws \Exception
      */
     protected function validatePayload(array $payload): void
@@ -25,18 +25,18 @@ class UpdateUserRequestHandler extends RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array<string, int|string> $payload
      * @return \App\Common\Interfaces\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command
     {
         return new UpdateUserCommand(
-            $payload['userId'],
+            (int)$payload['userId'],
             $payload['email'],
             $payload['firstName'],
             $payload['lastName'],
-            $payload['capital'],
+            (int)$payload['capital'],
             $payload['password']
         );
     }

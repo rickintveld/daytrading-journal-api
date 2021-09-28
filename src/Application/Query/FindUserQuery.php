@@ -9,8 +9,7 @@ use App\Common\Interfaces\Query;
  */
 class FindUserQuery implements Query
 {
-    /** @var int */
-    private $userId;
+    private int $userId;
 
     /**
      * @param int $userId

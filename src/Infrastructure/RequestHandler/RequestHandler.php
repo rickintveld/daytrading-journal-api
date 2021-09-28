@@ -35,12 +35,12 @@ abstract class RequestHandler
     }
 
     /**
-     * @param array $payload
+     * @param array<mixed> $payload
      */
     abstract protected function validatePayload(array $payload): void;
 
     /**
-     * @param array $payload
+     * @param array<mixed> $payload
      * @return \App\Common\Interfaces\Command
      */
     abstract protected function createCommand(array $payload): Command;

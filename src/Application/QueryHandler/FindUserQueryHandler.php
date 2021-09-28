@@ -16,8 +16,7 @@ class FindUserQueryHandler implements MessageHandlerInterface
 {
     use HandleTrait;
 
-    /** @var \App\Infrastructure\Repository\UserRepository */
-    private $userRepository;
+    private UserRepository $userRepository;
 
     /**
      * @param \App\Infrastructure\Repository\UserRepository $userRepository

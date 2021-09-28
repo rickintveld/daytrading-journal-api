@@ -11,8 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 final class MessengerCommandBus implements CommandBus
 {
-    /** @var \Symfony\Component\Messenger\MessageBusInterface */
-    private $commandBus;
+    private MessageBusInterface $commandBus;
 
     /**
      * @param \Symfony\Component\Messenger\MessageBusInterface $commandBus

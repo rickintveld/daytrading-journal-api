@@ -15,14 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class CreateUserCommandHandler implements CommandHandler
 {
-    /** @var \App\Infrastructure\Repository\UserRepository */
-    private $userRepository;
-
-    /** @var \Doctrine\ORM\EntityManager */
-    private $entityManager;
-
-    /** @var \App\Infrastructure\Builder\UserBuilder */
-    private $userBuilder;
+    private UserRepository $userRepository;
+    private EntityManagerInterface $entityManager;
+    private UserBuilder $userBuilder;
 
     /**
      * @param \App\Infrastructure\Repository\UserRepository $userRepository
@@ -41,9 +36,7 @@ class CreateUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\CreateUserCommand $command
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws UserAlreadyExists
+     * @throws \App\Common\Exception\UserAlreadyExists
      */
     public function __invoke(CreateUserCommand $command): void
     {
@@ -58,8 +51,6 @@ class CreateUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\CreateUserCommand $command
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(CreateUserCommand $command): void
     {

@@ -7,8 +7,7 @@ namespace App\Application\Command;
  */
 class UpdateUserCommand extends CreateUserCommand
 {
-    /** @var int */
-    private $identifier;
+    private int $identifier;
 
     /**
      * @param int    $identifier

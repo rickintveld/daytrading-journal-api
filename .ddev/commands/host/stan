@@ -1,0 +1,2 @@
+#!/bin/bash
+php ${DDEV_APPROOT}/vendor/bin/phpstan analyse -c ${DDEV_APPROOT}/phpstan.neon

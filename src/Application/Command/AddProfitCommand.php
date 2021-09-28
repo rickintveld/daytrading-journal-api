@@ -9,11 +9,10 @@ use App\Common\Interfaces\Command;
  */
 class AddProfitCommand implements Command
 {
-    /** @var int */
-    private $userId;
+    private int $userId;
 
-    /** @var float */
-    private $profit;
+    private float $profit;
+
 
     /**
      * @param int   $userId
