@@ -67,12 +67,12 @@ class User implements PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToOne(targetEntity=UserSettings::class, mappedBy="user", cascade={"persist", "remove"})
      */
-    private UserSettings $userSettings;
+    private ?UserSettings $userSettings;
 
     /**
      * @ORM\OneToMany(targetEntity=Profit::class, mappedBy="user", cascade={"persist"})
      */
-    private ArrayCollection $profits;
+    private ?ArrayCollection $profits;
 
     public function __construct()
     {

@@ -22,7 +22,7 @@ class Profit
      * @Ignore()
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="profits")
      */
-    private User $user;
+    private ?User $user;
 
     /**
      * @ORM\Column(type="float")

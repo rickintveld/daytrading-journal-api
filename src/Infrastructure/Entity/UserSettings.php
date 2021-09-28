@@ -22,7 +22,7 @@ class UserSettings
      * @Ignore()
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="userSettings", cascade={"persist", "remove"})
      */
-    private User $user;
+    private ?User $user = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
