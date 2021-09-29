@@ -25,4 +25,5 @@ framework:
       'App\Application\Command\WithdrawCommand': async
 
       # SYNC
+      'App\Application\Query\AllUsersQuery': sync
       'App\Application\Query\FindUserQuery': sync
