@@ -5,10 +5,9 @@ namespace App\Application\CommandHandler;
 use App\Application\Command\AddProfitCommand;
 use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Entity\Profit;
-use App\Infrastructure\Entity\User;
-use App\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Model\Profit;
+use App\Domain\Model\User;
+use App\Domain\Repository\UserRepository;
 
 /**
  * @package App\Application\CommandHandler
@@ -16,16 +15,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class AddProfitCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
+     * @param \App\Domain\Repository\UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -34,7 +30,7 @@ class AddProfitCommandHandler implements CommandHandler
      */
     public function __invoke(AddProfitCommand $command): void
     {
-        $user = $this->userRepository->findOneBy(['id' => $command->getUserId()]);
+        $user = $this->userRepository->findOneByIdentifier($command->getUserId());
 
         if (!$user) {
             throw new UserNotFoundException(sprintf('No user found for id %s', $command->getUserId()));
@@ -45,19 +41,15 @@ class AddProfitCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\AddProfitCommand $command
-     * @param \App\Infrastructure\Entity\User           $user
+     * @param \App\Domain\Model\User                    $user
      * @throws \Exception
      */
     private function handle(AddProfitCommand $command, User $user): void
     {
-        $profit = new Profit();
-        $profit->setUser($user)
-               ->setAmount($command->getProfit())
-               ->setCreatedAt(new \DateTimeImmutable());
+        $profit = new Profit($user->getId(), $command->getProfit());
 
         $user->addProfit($profit);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->store($user);
     }
 }

@@ -1,5 +1,6 @@
 #ddev-generated: Automatically generated ddev .gitignore.
 # You can remove the above line if you want to edit and maintain this file yourself.
+/.gitignore
 
 /**/*.example
 /.dbimageBuild
@@ -13,6 +14,11 @@
 /.webimageBuild
 /.webimageExtra
 /apache/apache-site.conf
+/commands/.gitattributes
+/commands/db/mysql
+/commands/host/launch
+/commands/web/live
+/commands/web/xdebug
 /config.*.y*ml
 /db_snapshots
 /import-db

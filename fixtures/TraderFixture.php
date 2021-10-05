@@ -2,7 +2,7 @@
 
 namespace App\Fixtures;
 
-use App\Infrastructure\Builder\UserBuilder;
+use App\Domain\Builder\UserBuilder;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -11,12 +11,8 @@ use Doctrine\Persistence\ObjectManager;
  */
 class TraderFixture extends Fixture
 {
-    /** @var \App\Infrastructure\Builder\UserBuilder */
     private $userBuilder;
 
-    /**
-     * @param \App\Infrastructure\Builder\UserBuilder $userBuilder
-     */
     public function __construct(UserBuilder $userBuilder)
     {
         $this->userBuilder = $userBuilder;

@@ -187,6 +187,14 @@ class User
     }
 
     /**
+     * @param \App\Domain\Model\Profit $profit
+     */
+    public function addProfit(Profit $profit): void
+    {
+        $this->profits = array_merge($this->getProfits(), [$profit]);
+    }
+
+    /**
      * @return bool
      */
     public function isBlocked(): bool
@@ -253,7 +261,7 @@ class User
     /**
      * @param float $amount
      * @return \App\Domain\Model\User
-     * @throws \Exception
+     * @throws InvalidFundsException
      */
     public function withdraw(float $amount): self
     {

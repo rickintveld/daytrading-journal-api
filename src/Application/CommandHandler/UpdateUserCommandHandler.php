@@ -5,9 +5,8 @@ namespace App\Application\CommandHandler;
 use App\Application\Command\UpdateUserCommand;
 use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Entity\User;
-use App\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Model\User;
+use App\Domain\Repository\UserRepository;
 
 /**
  * @package App\Application\CommandHandler
@@ -15,25 +14,26 @@ use Doctrine\ORM\EntityManagerInterface;
 class UpdateUserCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
+     * @param \App\Domain\Repository\UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
      * @param \App\Application\Command\UpdateUserCommand $command
      * @throws \App\Common\Exception\UserNotFoundException
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function __invoke(UpdateUserCommand $command): void
     {
-        $user = $this->userRepository->findOneBy(['id' => $command->getIdentifier()]);
+        $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
 
         if (!$user) {
             throw new UserNotFoundException('No user found');
@@ -44,7 +44,9 @@ class UpdateUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\UpdateUserCommand $command
-     * @param \App\Infrastructure\Entity\User            $user
+     * @param \App\Domain\Model\User                     $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(UpdateUserCommand $command, User $user): void
     {
@@ -56,7 +58,6 @@ class UpdateUserCommandHandler implements CommandHandler
             $command->getCapital()
         );
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->store($user);
     }
 }

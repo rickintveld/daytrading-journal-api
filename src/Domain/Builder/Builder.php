@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Infrastructure\Builder;
+namespace App\Domain\Builder;
 
 /**
- * @package App\Infrastructure\Builder
+ * @package App\Domain\Builder
  */
 interface Builder
 {
