@@ -3,11 +3,11 @@
 namespace App\Infrastructure\Repository;
 
 use App\Common\Exception\UserNotFoundException;
+use App\Domain\Model\User as DomainUser;
 use App\Infrastructure\Entity\User;
 use App\Infrastructure\Factory\UserFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use \App\Domain\Model\User as DomainUser;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +15,7 @@ use \App\Domain\Model\User as DomainUser;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements \App\Domain\Repository\UserRepository
 {
     private UserFactory $userFactory;
 
@@ -31,23 +31,23 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $id
+     * @param int $identifier
      * @return \App\Domain\Model\User
      *
      * @throws \App\Common\Exception\UserNotFoundException
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByIdentifier(int $id): DomainUser
+    public function findOneByIdentifier(int $identifier): DomainUser
     {
         $user = $this->createQueryBuilder('u')
                      ->andWhere('u.id = :id')
-                     ->setParameter('id', $id)
+                     ->setParameter('id', $identifier)
                      ->getQuery()
                      ->getSingleResult();
 
         if (!$user) {
-            throw new UserNotFoundException(sprintf('User not found with id: %s', $id));
+            throw new UserNotFoundException(sprintf('User not found with id: %s', $identifier));
         }
 
         return $this->userFactory->toDomainUser($user);
@@ -92,5 +92,16 @@ class UserRepository extends ServiceEntityRepository
             },
             $users
         );
+    }
+
+    /**
+     * @param \App\Domain\Model\User $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function store(DomainUser $user): void
+    {
+        $this->getEntityManager()->persist($this->userFactory->toPersistence($user));
+        $this->getEntityManager()->flush();
     }
 }

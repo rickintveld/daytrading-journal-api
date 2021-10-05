@@ -1,0 +1,71 @@
+paths:
+  - ./src
+exclude_files:
+  - '#.*Test.*#'
+layers:
+  ##############################
+  #   APPLICATION
+  ##############################
+  - name: Application
+    collectors:
+      - type: className
+        regex: ^App\\Application\\.*
+
+  ##############################
+  #   COMMON
+  ##############################
+  - name: Common
+    collectors:
+      - type: className
+        regex: ^App\\Common\\.*
+
+  ##############################
+  #   DOMAIN
+  ##############################
+  - name: Domain
+    collectors:
+      - type: className
+        regex: ^App\\Domain\\.*
+
+  ##############################
+  #   INFRASTRUCTURE
+  ##############################
+  - name: Infrastructure
+    collectors:
+      - type: className
+        regex: ^App\\Infrastructure\\.*
+
+  ##############################
+  #   SYMFONY
+  ##############################
+  - name: Symfony
+    collectors:
+      - type: className
+        regex: ^Symfony\\.*
+
+  ##############################
+  #   DOCTRINE
+  ##############################
+  - name: Doctrine
+    collectors:
+      - type: className
+        regex: ^Doctrine\\.*
+
+ruleset:
+  Application:
+    - Common
+    - Doctrine
+    - Domain
+    - Symfony
+  Common:
+    - Symfony
+  Domain:
+    - Common
+    - Doctrine
+    - Symfony
+  Infrastructure:
+    - Application
+    - Common
+    - Doctrine
+    - Domain
+    - Symfony

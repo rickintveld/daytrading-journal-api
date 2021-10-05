@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Entity;
 
-use App\Common\Exception\InvalidFundsException;
 use App\Infrastructure\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -89,6 +88,17 @@ class User implements PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return \App\Infrastructure\Entity\User
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -309,103 +319,4 @@ class User implements PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @param float $amount
-     * @return \App\Infrastructure\Entity\User
-     * @throws \App\Common\Exception\InvalidFundsException
-     */
-    public function withdraw(float $amount): self
-    {
-        if ($this->getUserSettings()->getCapital() === null) {
-            throw new InvalidFundsException(sprintf('Not enough money to withdraw %s', $amount));
-        }
-
-        if ($this->getUserSettings()->getCapital() < $amount) {
-            throw new InvalidFundsException(sprintf('Not enough money to withdraw %s', $amount));
-        }
-
-        $this->getProfits()->add((new Profit())->setAmount($amount));
-
-        return $this;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function block(): void
-    {
-        if ($this->getRemoved()) {
-            throw new \Exception('The user can not be blocked because of remove state');
-        }
-
-        $this->setBlocked(true);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function unblock(): void
-    {
-        if ($this->getRemoved()) {
-            throw new \Exception('The user can not be unblocked because of remove state, user should be restored');
-        }
-
-        $this->setBlocked(false);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function remove(): void
-    {
-        if (!$this->getBlocked()) {
-            throw new \Exception('This user can not be removed, should be blocked first');
-        }
-
-        $this->setRemoved(true);
-    }
-
-    public function restore(): void
-    {
-        $this->setBlocked(false);
-        $this->setRemoved(false);
-    }
-
-    /**
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string $password
-     * @param int    $capital
-     */
-    public function update(string $firstName, string $lastName, string $email, string $password, int $capital): void
-    {
-        if (!$this->isEqualTo($firstName, $this->getFirstName())) {
-            $this->setFirstName($firstName);
-        }
-        if (!$this->isEqualTo($lastName, $this->getLastName())) {
-            $this->setLastName($lastName);
-        }
-        if (!$this->isEqualTo($email, $this->getEmail())) {
-            $this->setEmail($email);
-        }
-        if (!$this->isEqualTo($password, $this->getPassword())) {
-            $this->setPassword($password);
-        }
-        if ($this->getUserSettings() && !$this->isEqualTo($capital, $this->getUserSettings()->getCapital())) {
-            $this->getUserSettings()->setCapital($capital);
-        }
-    }
-
-    /**
-     * @param int|string|float|object $value
-     * @param int|string|float|object $match
-     * @return bool
-     */
-    protected function isEqualTo($value, $match): bool
-    {
-        return $value === $match;
-    }
-
 }

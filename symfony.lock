@@ -206,6 +206,18 @@
     "psr/log": {
         "version": "1.1.4"
     },
+    "qossmic/deptrac-shim": {
+        "version": "0.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.7",
+            "ref": "2d7d934257e33fd83c72f5da5b5b1393efa7e0c6"
+        },
+        "files": [
+            "depfile.yaml"
+        ]
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },
@@ -420,6 +432,9 @@
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.23.0"
+    },
     "symfony/property-access": {
         "version": "v5.3.7"
     },
@@ -505,6 +520,9 @@
             "config/packages/twig.yaml",
             "templates/base.html.twig"
         ]
+    },
+    "symfony/uid": {
+        "version": "v5.3.3"
     },
     "symfony/validator": {
         "version": "4.3",

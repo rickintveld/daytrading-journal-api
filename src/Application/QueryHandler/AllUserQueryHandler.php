@@ -4,8 +4,7 @@ namespace App\Application\QueryHandler;
 
 use App\Application\Query\AllUsersQuery;
 use App\Common\Exception\UserNotFoundException;
-use App\Domain\Model\User as DomainUser;
-use App\Infrastructure\Repository\UserRepository;
+use App\Domain\Repository\UserRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\HandleTrait;
 
@@ -19,7 +18,7 @@ class AllUserQueryHandler implements MessageHandlerInterface
     private UserRepository $userRepository;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
+     * @param \App\Domain\Repository\UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {

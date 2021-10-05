@@ -5,9 +5,8 @@ namespace App\Application\CommandHandler;
 use App\Application\Command\RestoreUserCommand;
 use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Entity\User;
-use App\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Model\User;
+use App\Domain\Repository\UserRepository;
 
 /**
  * @package App\Application\CommandHandler
@@ -15,16 +14,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class RestoreUserCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
+     * @param \App\Domain\Repository\UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -33,7 +29,7 @@ class RestoreUserCommandHandler implements CommandHandler
      */
     public function __invoke(RestoreUserCommand $command): void
     {
-        $user = $this->userRepository->findOneBy(['id' => $command->getIdentifier()]);
+        $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
 
         if (!$user) {
             throw new UserNotFoundException('No user found');
@@ -43,13 +39,14 @@ class RestoreUserCommandHandler implements CommandHandler
     }
 
     /**
-     * @param \App\Infrastructure\Entity\User $user
+     * @param \App\Domain\Model\User $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(User $user): void
     {
         $user->restore();
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->store($user);
     }
 }

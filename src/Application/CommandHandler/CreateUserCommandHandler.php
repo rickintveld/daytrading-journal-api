@@ -4,11 +4,9 @@ namespace App\Application\CommandHandler;
 
 use App\Application\Command\CreateUserCommand;
 use App\Common\Exception\UserAlreadyExists;
-use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Builder\UserBuilder;
-use App\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Repository\UserRepository;
+use App\Domain\Builder\UserBuilder;
 
 /**
  * @package App\Application\CommandHandler
@@ -16,31 +14,29 @@ use Doctrine\ORM\EntityManagerInterface;
 class CreateUserCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
     private UserBuilder $userBuilder;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
-     * @param \App\Infrastructure\Builder\UserBuilder       $userBuilder
+     * @param \App\Domain\Repository\UserRepository $userRepository
+     * @param \App\Domain\Builder\UserBuilder       $userBuilder
      */
-    public function __construct(
-        UserRepository $userRepository,
-        EntityManagerInterface $entityManager,
-        UserBuilder $userBuilder
-    ) {
+    public function __construct(UserRepository $userRepository, UserBuilder $userBuilder)
+    {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
         $this->userBuilder = $userBuilder;
     }
 
     /**
      * @param \App\Application\Command\CreateUserCommand $command
      * @throws \App\Common\Exception\UserAlreadyExists
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function __invoke(CreateUserCommand $command): void
     {
-        $user = $this->userRepository->findOneBy(['email' => $command->getEmail()]);
+        $user = $this->userRepository->findOneByEmail($command->getEmail());
 
         if ($user) {
             throw new UserAlreadyExists('User already exists');
@@ -51,10 +47,14 @@ class CreateUserCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\CreateUserCommand $command
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     private function handle(CreateUserCommand $command): void
     {
-        $this->entityManager->persist($this->userBuilder->build($command->toArray()));
-        $this->entityManager->flush();
+        $this->userRepository->store(
+            $this->userBuilder->build($command->toArray())
+        );
     }
 }

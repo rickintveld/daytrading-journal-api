@@ -5,9 +5,8 @@ namespace App\Application\CommandHandler;
 use App\Application\Command\UnBlockUserCommand;
 use App\Common\Exception\UserNotFoundException;
 use App\Common\Interfaces\CommandHandler;
-use App\Infrastructure\Entity\User;
-use App\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Model\User;
+use App\Domain\Repository\UserRepository;
 
 /**
  * @package App\Application\CommandHandler
@@ -15,16 +14,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class UnblockUserCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
 
     /**
-     * @param \App\Infrastructure\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface          $entityManager
+     * @param \App\Domain\Repository\UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -34,7 +30,7 @@ class UnblockUserCommandHandler implements CommandHandler
      */
     public function __invoke(UnblockUserCommand $command): void
     {
-        $user = $this->userRepository->findOneBy(['id' => $command->getIdentifier()]);
+        $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
 
         if (!$user) {
             throw new UserNotFoundException('No user found');
@@ -44,14 +40,15 @@ class UnblockUserCommandHandler implements CommandHandler
     }
 
     /**
-     * @param \App\Infrastructure\Entity\User $user
-     * @throws \Exception
+     * @param \App\Domain\Model\User $user
+     * @throws \App\Common\Exception\InvalidUserStateException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(User $user): void
     {
         $user->unblock();
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->store($user);
     }
 }
