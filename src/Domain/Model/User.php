@@ -4,11 +4,12 @@ namespace App\Domain\Model;
 
 use App\Common\Exception\InvalidFundsException;
 use App\Common\Exception\InvalidUserStateException;
+use App\Domain\Analyse\Analysable;
 
 /**
  * @package App\Domain\Model
  */
-class User
+class User implements Analysable
 {
     private int $id;
 

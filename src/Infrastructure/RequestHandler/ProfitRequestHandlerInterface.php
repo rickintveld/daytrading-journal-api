@@ -9,7 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface ProfitRequestHandlerInterface
 {
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
     public function add(Request $request): void;
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
     public function withdraw(Request $request): void;
 }
