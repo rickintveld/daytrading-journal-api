@@ -22,8 +22,8 @@ class AnalyseUserProfitCommand extends Command
     private UserRepository $userRepository;
 
     private const HEADERS = [
-        'losers',
         'total',
+        'losers',
         'winners',
         'winPercentage'
     ];

@@ -37,10 +37,10 @@ class UserProfitStatistics implements Statistic
     public function getResult(): array
     {
         return [
-            'losers' => $this->losers(),
             'total' => $this->total(),
             'winners' => $this->winners(),
-            'winPercentage' => $this->winPercentage()
+            'losers' => $this->losers(),
+            'winPercentage' => $this->winPercentage() . ' %'
         ];
     }
 
