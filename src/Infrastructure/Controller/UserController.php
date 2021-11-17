@@ -4,7 +4,8 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Query\FindUserQuery;
 use App\Common\Interfaces\QueryBus;
-use App\Infrastructure\RequestHandler\UserRequestHandlerInterface;
+use App\Infrastructure\RequestHandler\RequestHandler;
+use App\Infrastructure\RequestHandler\UserRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     private QueryBus $queryBus;
-    private UserRequestHandlerInterface $userRequestHandler;
+    private UserRequestHandler $userRequestHandler;
 
-    public function __construct(QueryBus $queryBus, UserRequestHandlerInterface $userRequestHandler) {
+    public function __construct(QueryBus $queryBus, UserRequestHandler $userRequestHandler) {
         $this->queryBus = $queryBus;
         $this->userRequestHandler = $userRequestHandler;
     }
@@ -58,7 +59,7 @@ class UserController extends AbstractController
     public function create(Request $request): JsonResponse
     {
         try {
-            $this->userRequestHandler->create($request);
+            $this->userRequestHandler->handle($request, RequestHandler::USER_CREATE_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -83,7 +84,7 @@ class UserController extends AbstractController
     public function update(Request $request): JsonResponse
     {
         try {
-            $this->userRequestHandler->update($request);
+            $this->userRequestHandler->handle($request, RequestHandler::USER_UPDATE_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -108,7 +109,7 @@ class UserController extends AbstractController
     public function block(Request $request): JsonResponse
     {
         try {
-            $this->userRequestHandler->block($request);
+            $this->userRequestHandler->handle($request, RequestHandler::USER_BLOCK_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -133,7 +134,7 @@ class UserController extends AbstractController
     public function unblock(Request $request): JsonResponse
     {
         try {
-            $this->userRequestHandler->unblock($request);
+            $this->userRequestHandler->handle($request, RequestHandler::USER_UNBLOCK_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -158,7 +159,7 @@ class UserController extends AbstractController
     public function remove(Request $request): JsonResponse
     {
         try {
-            $this->userRequestHandler->remove($request);
+            $this->userRequestHandler->handle($request, RequestHandler::USER_REMOVE_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -183,7 +184,7 @@ class UserController extends AbstractController
     public function restore(Request $request): JsonResponse
     {
         try {
-            $this->userRequestHandler->restore($request);
+            $this->userRequestHandler->handle($request, RequestHandler::USER_RESTORE_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,

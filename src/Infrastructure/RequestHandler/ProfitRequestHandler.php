@@ -9,37 +9,37 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProfitRequestHandler implements ProfitRequestHandlerInterface
 {
-    /** @var \App\Infrastructure\RequestHandler\AddProfitRequestHandler */
-    private $addProfitRequestHandler;
-
-    /** @var \App\Infrastructure\RequestHandler\WithdrawRequestHandler */
-    private $withdrawRequestHandler;
+    /** @var iterable<ProfitRequestHandlerInterface> */
+    protected iterable $profitRequestHandlers;
 
     /**
-     * @param \App\Infrastructure\RequestHandler\AddProfitRequestHandler $addProfitRequestHandler
-     * @param \App\Infrastructure\RequestHandler\WithdrawRequestHandler  $withdrawRequestHandler
+     * @param iterable<ProfitRequestHandlerInterface> $userRequestHandlers
      */
-    public function __construct(
-        AddProfitRequestHandler $addProfitRequestHandler,
-        WithdrawRequestHandler $withdrawRequestHandler
-    ) {
-        $this->addProfitRequestHandler = $addProfitRequestHandler;
-        $this->withdrawRequestHandler = $withdrawRequestHandler;
+    public function __construct(iterable $userRequestHandlers)
+    {
+        foreach ($userRequestHandlers as $handler) {
+            $this->addHandler($handler);
+        }
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface $handler
      */
-    public function add(Request $request): void
+    public function addHandler(ProfitRequestHandlerInterface $handler): void
     {
-        $this->addProfitRequestHandler->handle($request);
+        $this->handlers[get_class($handler)] = $handler;
     }
 
     /**
+     * @param int                                       $type
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function withdraw(Request $request): void
+    public function handle(Request $request, int $type): void
     {
-        $this->withdrawRequestHandler->handle($request);
+        foreach ($this->profitRequestHandlers as $handler) {
+            if ($handler->supports($type)) {
+                $handler->handle($request);
+            }
+        }
     }
 }

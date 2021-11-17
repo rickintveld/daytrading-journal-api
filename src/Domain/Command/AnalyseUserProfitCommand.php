@@ -4,6 +4,7 @@ namespace App\Domain\Command;
 
 use App\Domain\Analyse\Analyse;
 use App\Domain\Repository\UserRepository;
+use App\Domain\Statistic\StatisticResult;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -69,12 +70,14 @@ class AnalyseUserProfitCommand extends Command
 
     /**
      * @param int $userId
-     * @return array
+     *
+     * @return \App\Domain\Statistic\StatisticResult
+     *
      * @throws \App\Common\Exception\UserNotFoundException
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    private function getAnalyzedUser(int $userId): array
+    protected function getAnalyzedUser(int $userId): StatisticResult
     {
         return $this->analyser->set(
             $this->userRepository->findOneByIdentifier($userId)
@@ -82,14 +85,12 @@ class AnalyseUserProfitCommand extends Command
     }
 
     /**
-     * @return array
+     * @return array[StatisticResult]
      */
-    private function getAllAnalyzedUsers(): array
+    protected function getAllAnalyzedUsers(): array
     {
-        $users = array_map(function($user) {
+        return array_map(function($user) {
             return $this->analyser->set($user)->analyse();
         }, $this->userRepository->findAllActive(false, false));
-
-        return $users;
     }
 }

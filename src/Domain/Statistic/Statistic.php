@@ -7,5 +7,8 @@ namespace App\Domain\Statistic;
  */
 interface Statistic
 {
-    public function getResult(): array;
+    /**
+     * @return \App\Domain\Statistic\StatisticResult
+     */
+    public function getResult(): StatisticResult;
 }

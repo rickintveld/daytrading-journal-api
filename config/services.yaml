@@ -16,6 +16,12 @@ services:
     class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
     tags: [serializer.normalizer]
 
+  _instanceof:
+    App\Infrastructure\RequestHandler\UserRequestHandlerInterface:
+      tags: [ 'user.request.handler' ]
+    App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface:
+      tags: [ 'profit.request.handler' ]
+
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
   App\:
@@ -40,3 +46,9 @@ services:
       autoconfigure: false
       tags:
         - { name: messenger.message_handler, bus: command.bus }
+
+  App\Infrastructure\RequestHandler\UserRequestHandler:
+    arguments: [ !tagged user.request.handler, !tagged messenger.message_handler ]
+
+  App\Infrastructure\RequestHandler\ProfitRequestHandler:
+    arguments: [ !tagged profit.request.handler, !tagged messenger.message_handler ]

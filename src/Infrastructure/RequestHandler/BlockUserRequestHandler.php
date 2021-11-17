@@ -9,8 +9,17 @@ use \App\Common\Exception\InvalidArgumentException;
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class BlockUserRequestHandler extends RequestHandler
+class BlockUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
+    /**
+     * @param int $requestType
+     * @return bool
+     */
+    public function supports(int $requestType): bool
+    {
+        return RequestHandler::USER_BLOCK_TYPE === $requestType;
+    }
+
     /**
      * @param array<int> $payload
      * @throws \Exception

@@ -9,7 +9,7 @@ use App\Common\Interfaces\Command;
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class RemoveUserRequestHandler extends RequestHandler
+class RemoveUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
     /**
      * @param array<int> $payload
@@ -30,5 +30,14 @@ class RemoveUserRequestHandler extends RequestHandler
     protected function createCommand(array $payload): Command
     {
         return new RemoveUserCommand($payload['identifier']);
+    }
+
+    /**
+     * @param int $requestType
+     * @return bool
+     */
+    protected function supports(int $requestType): bool
+    {
+        return RequestHandler::USER_REMOVE_TYPE === $requestType;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Domain\Analyse;
 
 use App\Common\Exception\UserNotDefinedException;
 use App\Domain\Model\User;
+use App\Domain\Statistic\StatisticResult;
 use App\Domain\Statistic\UserProfitStatistics;
 
 /**
@@ -43,11 +44,11 @@ class UserAnalyzer implements Analyse
     }
 
     /**
-     * @return array<string, int|float>
+     * @return StatisticResult
      *
      * @throws \Exception
      */
-    public function analyse(): array
+    public function analyse(): StatisticResult
     {
         if (!$this->user) {
             throw new UserNotDefinedException();

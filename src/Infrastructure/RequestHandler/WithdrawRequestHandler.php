@@ -12,6 +12,15 @@ use App\Common\Interfaces\Command;
 class WithdrawRequestHandler extends RequestHandler
 {
     /**
+     * @param int $requestType
+     * @return bool
+     */
+    public function supports(int $requestType): bool
+    {
+        return RequestHandler::PROFIT_WITHDRAW_TYPE === $requestType;
+    }
+
+    /**
      * @param array{userId: int, amount: float} $payload
      * @throws \Exception
      */

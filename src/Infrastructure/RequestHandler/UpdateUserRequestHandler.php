@@ -9,8 +9,17 @@ use App\Common\Interfaces\Command;
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class UpdateUserRequestHandler extends RequestHandler
+class UpdateUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
+    /**
+     * @param int $requestType
+     * @return bool
+     */
+    public function supports(int $requestType): bool
+    {
+        return RequestHandler::USER_UNBLOCK_TYPE === $requestType;
+    }
+
     /**
      * @param array<string, int|string> $payload
      * @throws \Exception

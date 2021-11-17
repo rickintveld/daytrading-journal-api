@@ -9,8 +9,17 @@ use \App\Common\Exception\InvalidArgumentException;
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class CreateUserRequestHandler extends RequestHandler
+class CreateUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
+    /**
+     * @param int $requestType
+     * @return bool
+     */
+    public function supports(int $requestType): bool
+    {
+        return RequestHandler::USER_CREATE_TYPE === $requestType;
+    }
+
     /**
      * @param array{email: string, firstName: string, lastName: string, capital: float, password: string} $payload
      * @throws \Exception

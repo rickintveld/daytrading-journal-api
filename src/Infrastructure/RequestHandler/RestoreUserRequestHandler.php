@@ -9,7 +9,7 @@ use App\Common\Interfaces\Command;
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class RestoreUserRequestHandler extends RequestHandler
+class RestoreUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
     /**
      * @param array<int> $payload
@@ -30,5 +30,14 @@ class RestoreUserRequestHandler extends RequestHandler
     protected function createCommand(array $payload): Command
     {
         return new RestoreUserCommand($payload['identifier']);
+    }
+
+    /**
+     * @param int $requestType
+     * @return bool
+     */
+    protected function supports(int $requestType): bool
+    {
+        return RequestHandler::USER_RESTORE_TYPE === $requestType;
     }
 }

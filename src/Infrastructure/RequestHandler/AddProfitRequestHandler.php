@@ -12,6 +12,15 @@ use App\Common\Exception\InvalidArgumentException;
 class AddProfitRequestHandler extends RequestHandler
 {
     /**
+     * @param int $requestType
+     * @return bool
+     */
+    public function supports(int $requestType): bool
+    {
+        return RequestHandler::PROFIT_ADD_TYPE === $requestType;
+    }
+
+    /**
      * @param array{userId: int, profit: float} $payload
      * @throws InvalidArgumentException
      */

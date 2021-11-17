@@ -2,7 +2,7 @@
 
 namespace App\Domain\Statistic;
 
-use App\Domain\Model\Profit;
+use App\Common\Exception\UserNotDefinedException;
 use App\Domain\Model\User;
 
 /**
@@ -24,69 +24,15 @@ class UserProfitStatistics implements Statistic
     }
 
     /**
-     * @return \App\Domain\Model\User
+     * @return StatisticResult
+     * @throws \Exception
      */
-    public function getUser(): User
+    public function getResult(): StatisticResult
     {
-        return $this->user;
-    }
+        if (!$this->user) {
+            throw new UserNotDefinedException();
+        }
 
-    /**
-     * @return array<string, int|float>
-     */
-    public function getResult(): array
-    {
-        return [
-            'total' => $this->total(),
-            'winners' => $this->winners(),
-            'losers' => $this->losers(),
-            'winPercentage' => $this->winPercentage() . ' %'
-        ];
-    }
-
-    /**
-     * @return int
-     */
-    private function winners(): int
-    {
-        $winners = array_filter($this->getUser()->getProfits(), static function($profit) {
-            /** @var Profit $profit */
-            if ($profit->getAmount() >= 0) {
-                return $profit;
-            }
-        });
-
-        return count($winners);
-    }
-
-    /**
-     * @return int
-     */
-    private function losers(): int
-    {
-        $losers = array_filter($this->getUser()->getProfits(), static function($profit) {
-            /** @var Profit $profit */
-            if ($profit->getAmount() < 0) {
-                return $profit;
-            }
-        });
-
-        return count($losers);
-    }
-
-    /**
-     * @return int
-     */
-    private function total(): int
-    {
-        return count($this->getUser()->getProfits());
-    }
-
-    /**
-     * @return float
-     */
-    private function winPercentage(): float
-    {
-        return ($this->winners() / $this->total()) * 100;
+        return (new StatisticResult($this->user))->build();
     }
 }

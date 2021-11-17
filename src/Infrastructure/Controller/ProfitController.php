@@ -2,7 +2,8 @@
 
 namespace App\Infrastructure\Controller;
 
-use App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface;
+use App\Infrastructure\RequestHandler\ProfitRequestHandler;
+use App\Infrastructure\RequestHandler\RequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProfitController extends AbstractController
 {
-    private ProfitRequestHandlerInterface $profitRequestHandler;
+    private ProfitRequestHandler $profitRequestHandler;
 
-    public function __construct(ProfitRequestHandlerInterface $profitRequestHandler)
+    /**
+     * @param \App\Infrastructure\RequestHandler\ProfitRequestHandler $profitRequestHandler
+     */
+    public function __construct(ProfitRequestHandler $profitRequestHandler)
     {
         $this->profitRequestHandler = $profitRequestHandler;
     }
@@ -30,7 +34,7 @@ class ProfitController extends AbstractController
     public function add(Request $request): JsonResponse
     {
         try {
-            $this->profitRequestHandler->add($request);
+            $this->profitRequestHandler->handle($request, RequestHandler::PROFIT_ADD_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
@@ -54,7 +58,7 @@ class ProfitController extends AbstractController
     public function withdraw(Request $request): JsonResponse
     {
         try {
-            $this->profitRequestHandler->withdraw($request);
+            $this->profitRequestHandler->handle($request, RequestHandler::PROFIT_WITHDRAW_TYPE);
         } catch (HandlerFailedException $exception) {
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
