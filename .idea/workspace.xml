@@ -2,32 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c27ffed-2253-433c-89b5-7a486d116591" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Domain/Statistic/StatisticResult.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandlerInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/daytrading-journal-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/daytrading-journal-api.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Analyse/Analyse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Analyse/Analyse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Analyse/UserAnalyzer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Analyse/UserAnalyzer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Command/AnalyseUserProfitCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Command/AnalyseUserProfitCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Statistic/Statistic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistic/Statistic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Statistic/UserProfitStatistics.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistic/UserProfitStatistics.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Controller/ProfitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Controller/ProfitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/AddProfitRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/AddProfitRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/BlockUserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/BlockUserRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/CreateUserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/CreateUserRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/ProfitRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/ProfitRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/ProfitRequestHandlerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/ProfitRequestHandlerInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RemoveUserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RemoveUserRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RestoreUserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RestoreUserRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UnblockUserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UnblockUserRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UpdateUserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UpdateUserRequestHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandlerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandlerInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UserRequestHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UserRequestHandlerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UserRequestHandlerInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/WithdrawRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/WithdrawRequestHandler.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -380,7 +357,7 @@
       <workItem from="1636648653280" duration="972000" />
       <workItem from="1636724480362" duration="1260000" />
       <workItem from="1637055713544" duration="638000" />
-      <workItem from="1637164068690" duration="3708000" />
+      <workItem from="1637164068690" duration="4107000" />
     </task>
     <servers />
   </component>

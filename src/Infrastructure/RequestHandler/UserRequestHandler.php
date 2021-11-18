@@ -27,13 +27,12 @@ class UserRequestHandler
      */
     public function addHandler(UserRequestHandlerInterface $handler): void
     {
-        $this->handlers[get_class($handler)] = $handler;
+        $this->userRequestHandlers[get_class($handler)] = $handler;
     }
 
     /**
      * @param int                                       $type
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return null
      */
     public function handle(Request $request, int $type): void
     {
