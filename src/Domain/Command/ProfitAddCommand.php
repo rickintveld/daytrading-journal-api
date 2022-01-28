@@ -91,6 +91,7 @@ class ProfitAddCommand extends Command
         $profit = $input->getArgument('profit');
 
         try {
+            /** @var User $user */
             $user = $this->entityManager->getRepository(User::class)->findByEmailAndPassword($email, $password);
         } catch (UserNotFoundException $exception) {
             $io->error($exception->getMessage());
