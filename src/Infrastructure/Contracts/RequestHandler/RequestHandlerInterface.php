@@ -4,10 +4,6 @@ namespace App\Infrastructure\Contracts\RequestHandler;
 
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Interface UserRequestHandlerInterface
- * @package App\Infrastructure\RequestHandler
- */
 interface RequestHandlerInterface
 {
     /**

@@ -2,9 +2,4 @@
 
 namespace App\Common\Contracts;
 
-/**
- * @package App\Common\Interfaces
- */
-interface Command
-{
-}
+interface Command {}

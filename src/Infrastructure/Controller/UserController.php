@@ -6,6 +6,7 @@ use App\Application\Query\FindUserQuery;
 use App\Common\Contracts\QueryBus;
 use App\Infrastructure\RequestHandler\RequestHandler;
 use App\Infrastructure\RequestHandler\UserRequestHandler;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +22,18 @@ class UserController extends AbstractController
 {
     private QueryBus $queryBus;
     private UserRequestHandler $userRequestHandler;
+    private LoggerInterface $logger;
 
-    public function __construct(QueryBus $queryBus, UserRequestHandler $userRequestHandler) {
+    /**
+     * @param \App\Common\Contracts\QueryBus                        $queryBus
+     * @param \App\Infrastructure\RequestHandler\UserRequestHandler $userRequestHandler
+     * @param \Psr\Log\LoggerInterface                              $logger
+     */
+    public function __construct(QueryBus $queryBus, UserRequestHandler $userRequestHandler, LoggerInterface $logger)
+    {
         $this->queryBus = $queryBus;
         $this->userRequestHandler = $userRequestHandler;
+        $this->logger = $logger;
     }
 
     /**
@@ -38,6 +47,8 @@ class UserController extends AbstractController
             /** @var \App\Domain\Model\User $user */
             $user = $this->queryBus->query(new FindUserQuery($id));
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -61,6 +72,8 @@ class UserController extends AbstractController
         try {
             $this->userRequestHandler->handle($request, RequestHandler::USER_CREATE_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -86,6 +99,8 @@ class UserController extends AbstractController
         try {
             $this->userRequestHandler->handle($request, RequestHandler::USER_UPDATE_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -111,6 +126,8 @@ class UserController extends AbstractController
         try {
             $this->userRequestHandler->handle($request, RequestHandler::USER_BLOCK_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -136,6 +153,8 @@ class UserController extends AbstractController
         try {
             $this->userRequestHandler->handle($request, RequestHandler::USER_UNBLOCK_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -161,6 +180,8 @@ class UserController extends AbstractController
         try {
             $this->userRequestHandler->handle($request, RequestHandler::USER_REMOVE_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -186,6 +207,8 @@ class UserController extends AbstractController
         try {
             $this->userRequestHandler->handle($request, RequestHandler::USER_RESTORE_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
