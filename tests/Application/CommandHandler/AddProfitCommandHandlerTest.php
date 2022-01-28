@@ -20,25 +20,24 @@ class AddProfitCommandHandlerTest extends CommandHandlerProvider
      */
     public function testAddProfitCommand(User $user): void
     {
-        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn($user);
+        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with('1')->willReturn($user);
         $this->userRepositoryMock->expects($this->once())->method('store');
 
-        $commandHandler = new AddProfitCommandHandler($this->userRepositoryMock);
+        $commandHandler = new AddProfitCommandHandler($this->userRepositoryMock, $this->loggerMock);
 
-        $commandHandler(new AddProfitCommand(1, 1000));
+        $commandHandler(new AddProfitCommand('1', 1000));
     }
 
     /**
      * @throws \Exception
      */
-    public function testAddProfitCommandToThrowAnError(): void
+    public function testAddProfitCommandToLogAnError(): void
     {
-        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn('');
+        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with('1')->willThrowException(new UserNotFoundException());
+        $this->loggerMock->expects($this->once())->method('error');
 
-        $this->expectException(UserNotFoundException::class);
+        $commandHandler = new AddProfitCommandHandler($this->userRepositoryMock, $this->loggerMock);
 
-        $commandHandler = new AddProfitCommandHandler($this->userRepositoryMock);
-
-        $commandHandler(new AddProfitCommand(1, 1000));
+        $commandHandler(new AddProfitCommand('1', 1000));
     }
 }

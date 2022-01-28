@@ -21,22 +21,19 @@ class RestoreUserCommandHandlerTest extends CommandHandlerProvider
         $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn($user);
         $this->userRepositoryMock->expects($this->once())->method('store');
 
-        $commandHandler = new RestoreUserCommandHandler($this->userRepositoryMock);
-
-        $commandHandler(new RestoreUserCommand(1));
+        $commandHandler = new RestoreUserCommandHandler($this->userRepositoryMock, $this->loggerMock);
+        $commandHandler(new RestoreUserCommand('1'));
     }
 
     /**
      * @throws \Exception
      */
-    public function testRestoreUserCommandToThrowAnError(): void
+    public function testRestoreUserCommandToLogAnError(): void
     {
-        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn('');
+        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with('1')->willThrowException(new UserNotFoundException());
+        $this->loggerMock->expects($this->once())->method('error');
 
-        $this->expectException(UserNotFoundException::class);
-
-        $commandHandler = new RestoreUserCommandHandler($this->userRepositoryMock);
-
-        $commandHandler(new RestoreUserCommand(1));
+        $commandHandler = new RestoreUserCommandHandler($this->userRepositoryMock, $this->loggerMock);
+        $commandHandler(new RestoreUserCommand('1'));
     }
 }
