@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Controller;
 
 use App\Application\Query\FindUserQuery;
-use App\Common\Interfaces\QueryBus;
+use App\Common\Contracts\QueryBus;
 use App\Infrastructure\RequestHandler\RequestHandler;
 use App\Infrastructure\RequestHandler\UserRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,10 +29,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user", methods={"GET"})
-     * @param int $id
+     * @param string $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function user(int $id): JsonResponse
+    public function user(string $id): JsonResponse
     {
         try {
             /** @var \App\Domain\Model\User $user */

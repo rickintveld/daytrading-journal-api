@@ -3,11 +3,10 @@
 namespace App\Application\CommandHandler;
 
 use App\Application\Command\BlockUserCommand;
+use App\Common\Contracts\CommandHandler;
 use App\Common\Exception\UserNotFoundException;
-use App\Common\Interfaces\CommandHandler;
+use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\User;
-use App\Domain\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @package App\Application\CommandHandler
@@ -15,16 +14,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class BlockUserCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
 
     /**
-     * @param \App\Domain\Repository\UserRepository $userRepository
-     * @param \Doctrine\ORM\EntityManagerInterface  $entityManager
+     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -33,28 +29,26 @@ class BlockUserCommandHandler implements CommandHandler
      */
     public function __invoke(BlockUserCommand $command): void
     {
-        $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
+        try {
+            $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
+            $this->handle($user);
+        } catch (UserNotFoundException $exception) {
 
-        if (!$user) {
-            throw new UserNotFoundException('No user found');
         }
 
-        $this->handle($user);
     }
 
     /**
      * @param \App\Domain\Model\User $user
+     *
      * @throws \App\Common\Exception\InvalidUserStateException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function handle(User $user): void
     {
         $user->block();
 
-        /**
-         * @todo create user persistence
-         */
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->store($user);
     }
 }

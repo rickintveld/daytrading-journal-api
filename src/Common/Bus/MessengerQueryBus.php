@@ -2,8 +2,8 @@
 
 namespace App\Common\Bus;
 
-use App\Common\Interfaces\Query;
-use App\Common\Interfaces\QueryBus;
+use App\Common\Contracts\Query;
+use App\Common\Contracts\QueryBus;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -23,7 +23,7 @@ final class MessengerQueryBus implements QueryBus
     }
 
     /**
-     * @param \App\Common\Interfaces\Query $query
+     * @param \App\Common\Contracts\Query $query
      * @return mixed|null
      */
     public function query(Query $query)

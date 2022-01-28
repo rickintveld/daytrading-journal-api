@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Interfaces;
+namespace App\Common\Contracts;
 
 /**
  * @package App\Common\Interfaces
@@ -8,7 +8,7 @@ namespace App\Common\Interfaces;
 interface QueryBus
 {
     /**
-     * @param \App\Common\Interfaces\Query $query
+     * @param \App\Common\Contracts\Query $query
      * @return mixed
      */
     public function query(Query $query);

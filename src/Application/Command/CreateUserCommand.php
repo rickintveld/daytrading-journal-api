@@ -2,7 +2,7 @@
 
 namespace App\Application\Command;
 
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
 
 /**
  * @package App\Application\Command
@@ -10,13 +10,9 @@ use App\Common\Interfaces\Command;
 class CreateUserCommand implements Command
 {
     private string $email;
-
     private string $firstName;
-
     private string $lastName;
-
     private int $capital;
-
     private string $password;
 
     /**
@@ -85,7 +81,7 @@ class CreateUserCommand implements Command
             'lastName' => $this->getLastName(),
             'email' => $this->getEmail(),
             'password' => $this->getPassword(),
-            'capital' => $this->getCapital()
+            'capital' => $this->getCapital(),
         ];
     }
 }

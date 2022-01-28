@@ -4,59 +4,46 @@ namespace App\Domain\Model;
 
 use App\Common\Exception\InvalidFundsException;
 use App\Common\Exception\InvalidUserStateException;
-use App\Domain\Analyse\Analysable;
+use App\Domain\Contracts\Analyse\Analysable;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @package App\Domain\Model
- */
-class User implements Analysable
+class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterface
 {
-    private int $id;
-
+    private string $id;
     private string $email;
-
-    private string $password;
-
     private string $firstName;
-
     private string $lastName;
-
     private float $startCapital;
-
-    /** @var \App\Domain\Model\Profit[] */
-    private array $profits;
-
+    private ?string $password;
+    private ?array $profits;
     private bool $blocked;
-
     private bool $removed;
-
     private \DateTimeImmutable $createdAt;
-
     private \DateTimeImmutable $updatedAt;
 
     /**
      * User constructor.
-     * @param int                        $id
-     * @param string                     $email
-     * @param string                     $password
-     * @param string                     $firstName
-     * @param string                     $lastName
-     * @param float                      $capital
-     * @param \App\Domain\Model\Profit[] $profits
-     * @param bool                       $blocked
-     * @param bool                       $removed
-     * @param \DateTimeImmutable         $createdAt
-     * @param \DateTimeImmutable         $updatedAt
-     * @throws \Exception
+     * @param string                          $id
+     * @param string                          $email
+     * @param string                          $firstName
+     * @param string                          $lastName
+     * @param float                           $capital
+     * @param string|null                     $password
+     * @param \App\Domain\Model\Profit[]|null $profits
+     * @param bool                            $blocked
+     * @param bool                            $removed
+     * @param \DateTimeImmutable|null         $createdAt
+     * @param \DateTimeImmutable|null         $updatedAt
      */
     public function __construct(
-        int $id,
+        string $id,
         string $email,
-        string $password,
         string $firstName,
         string $lastName,
         float $capital,
-        array $profits,
+        ?string $password = null,
+        array $profits = null,
         bool $blocked = false,
         bool $removed = false,
         \DateTimeImmutable $createdAt = null,
@@ -76,17 +63,17 @@ class User implements Analysable
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
@@ -108,17 +95,17 @@ class User implements Analysable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
     }
@@ -172,9 +159,17 @@ class User implements Analysable
     }
 
     /**
-     * @return \App\Domain\Model\Profit[]
+     * @return bool
      */
-    public function getProfits(): array
+    public function hasProfits(): bool
+    {
+        return (null !== $this->getProfits()) || (is_array($this->getProfits()) ? count($this->getProfits()) > 0 : false);
+    }
+
+    /**
+     * @return \App\Domain\Model\Profit[]|null
+     */
+    public function getProfits(): ?array
     {
         return $this->profits;
     }
@@ -362,7 +357,7 @@ class User implements Analysable
     {
         return implode(' ', [
             $this->getFirstName(),
-            $this->getLastName()
+            $this->getLastName(),
         ]);
     }
 
@@ -371,15 +366,55 @@ class User implements Analysable
      */
     public function getCapital(): float
     {
+        $profits = [];
         $startCapital = $this->getStartCapital();
-        $profits = array_map(
-            /** Profit $profit */
-            static function ($profit) {
+
+        if ($this->hasProfits()) {
+            $profits = array_map(static function ($profit) {
                 return $profit->getAmount();
-            },
-            $this->getProfits()
-        );
+            }, $this->getProfits());
+        }
 
         return $startCapital + array_sum($profits);
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getRoles(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt(): string
+    {
+        return $this->getPassword();
+    }
+
+    /**
+     * @return void
+     */
+    public function eraseCredentials(): void
+    {
+        $this->setPassword(null);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->getEmail();
     }
 }

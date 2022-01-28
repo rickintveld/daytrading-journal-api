@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\RequestHandler;
+namespace App\Infrastructure\Contracts\RequestHandler;
 
 /**
  * Interface UserRequestHandlerInterface

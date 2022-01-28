@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Builder;
+namespace App\Domain\Contracts\Builder;
 
 /**
  * @package App\Domain\Builder
@@ -8,7 +8,7 @@ namespace App\Domain\Builder;
 interface Builder
 {
     /**
-     * @param array<mixed> $arguments
+     * @param array $arguments
      * @return mixed
      */
     public function build(array $arguments);

@@ -2,27 +2,27 @@
 
 namespace App\Application\Query;
 
-use App\Common\Interfaces\Query;
+use App\Common\Contracts\Query;
 
 /**
  * @package App\Application\Query
  */
 class FindUserQuery implements Query
 {
-    private int $userId;
+    private string $userId;
 
     /**
-     * @param int $userId
+     * @param string $userId
      */
-    public function __construct(int $userId)
+    public function __construct(string $userId)
     {
         $this->userId = $userId;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId(): int
+    public function getUserId(): string
     {
         return $this->userId;
     }

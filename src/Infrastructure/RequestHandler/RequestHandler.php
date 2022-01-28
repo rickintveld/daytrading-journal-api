@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\RequestHandler;
 
-use App\Common\Interfaces\Command;
-use App\Common\Interfaces\CommandBus;
+use App\Common\Contracts\Command;
+use App\Common\Contracts\CommandBus;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -35,7 +35,7 @@ abstract class RequestHandler
     private CommandBus $commandBus;
 
     /**
-     * @param \App\Common\Interfaces\CommandBus $commandBus
+     * @param \App\Common\Contracts\CommandBus $commandBus
      */
     public function __construct(CommandBus $commandBus)
     {
@@ -67,7 +67,7 @@ abstract class RequestHandler
 
     /**
      * @param array $payload
-     * @return \App\Common\Interfaces\Command
+     * @return \App\Common\Contracts\Command
      */
     abstract protected function createCommand(array $payload): Command;
 }

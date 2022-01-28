@@ -4,13 +4,23 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\RestoreUserCommand;
 use App\Common\Exception\InvalidArgumentException;
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
+use App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface;
 
 /**
  * @package App\Infrastructure\RequestHandler
  */
 class RestoreUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
+    /**
+     * @param int $requestType
+     * @return bool
+     */
+    public function supports(int $requestType): bool
+    {
+        return RequestHandler::USER_RESTORE_TYPE === $requestType;
+    }
+
     /**
      * @param array<int> $payload
      * @throws \Exception
@@ -24,20 +34,11 @@ class RestoreUserRequestHandler extends RequestHandler implements UserRequestHan
 
     /**
      * @param array<int> $payload
-     * @return \App\Common\Interfaces\Command
+     * @return \App\Common\Contracts\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command
     {
         return new RestoreUserCommand($payload['identifier']);
-    }
-
-    /**
-     * @param int $requestType
-     * @return bool
-     */
-    protected function supports(int $requestType): bool
-    {
-        return RequestHandler::USER_RESTORE_TYPE === $requestType;
     }
 }

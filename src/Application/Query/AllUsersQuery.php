@@ -2,7 +2,7 @@
 
 namespace App\Application\Query;
 
-use App\Common\Interfaces\Query;
+use App\Common\Contracts\Query;
 
 /**
  * @package App\Application\Query

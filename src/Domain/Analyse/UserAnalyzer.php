@@ -3,6 +3,8 @@
 namespace App\Domain\Analyse;
 
 use App\Common\Exception\UserNotDefinedException;
+use App\Domain\Contracts\Analyse\Analysable;
+use App\Domain\Contracts\Analyse\Analyse;
 use App\Domain\Model\User;
 use App\Domain\Statistic\StatisticResult;
 use App\Domain\Statistic\UserProfitStatistics;
@@ -12,7 +14,7 @@ use App\Domain\Statistic\UserProfitStatistics;
  */
 class UserAnalyzer implements Analyse
 {
-    private User $user;
+    private ?User $user;
 
     private UserProfitStatistics $userProfitStatistics;
 
@@ -25,12 +27,13 @@ class UserAnalyzer implements Analyse
     }
 
     /**
-     * @param Analysable $user
+     * @param Analysable $analysable
+     *
      * @return \App\Domain\Analyse\UserAnalyzer
      */
-    public function set(Analysable $user): Analyse
+    public function set(Analysable $analysable): Analyse
     {
-        $this->user = $user;
+        $this->user = $analysable;
 
         return $this;
     }

@@ -3,13 +3,14 @@
 namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\AddProfitCommand;
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
 use App\Common\Exception\InvalidArgumentException;
+use App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface;
 
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class AddProfitRequestHandler extends RequestHandler
+class AddProfitRequestHandler extends RequestHandler implements ProfitRequestHandlerInterface
 {
     /**
      * @param int $requestType
@@ -35,7 +36,7 @@ class AddProfitRequestHandler extends RequestHandler
 
     /**
      * @param array{userId: int, profit: float} $payload
-     * @return \App\Common\Interfaces\Command
+     * @return \App\Common\Contracts\Command
      */
     protected function createCommand(array $payload): Command
     {

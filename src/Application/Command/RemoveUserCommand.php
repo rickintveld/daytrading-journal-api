@@ -2,27 +2,27 @@
 
 namespace App\Application\Command;
 
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
 
 /**
  * @package App\Application\Command
  */
 class RemoveUserCommand implements Command
 {
-    private int $identifier;
+    private string $identifier;
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      */
-    public function __construct(int $identifier)
+    public function __construct(string $identifier)
     {
         $this->identifier = $identifier;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIdentifier(): int {
+    public function getIdentifier(): string {
         return $this->identifier;
     }
 }

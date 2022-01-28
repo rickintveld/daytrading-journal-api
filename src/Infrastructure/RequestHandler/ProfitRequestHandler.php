@@ -2,32 +2,34 @@
 
 namespace App\Infrastructure\RequestHandler;
 
+use App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class ProfitRequestHandler implements ProfitRequestHandlerInterface
+class ProfitRequestHandler
 {
     /** @var iterable<ProfitRequestHandlerInterface> */
     protected iterable $profitRequestHandlers;
 
     /**
-     * @param iterable<ProfitRequestHandlerInterface> $userRequestHandlers
+     * @param iterable<ProfitRequestHandlerInterface> $profitRequestHandlers
      */
-    public function __construct(iterable $userRequestHandlers)
+    public function __construct(iterable $profitRequestHandlers)
     {
-        foreach ($userRequestHandlers as $handler) {
+        foreach ($profitRequestHandlers as $handler) {
             $this->addHandler($handler);
         }
     }
 
     /**
-     * @param \App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface $handler
+     * @param \App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface $handler
+     * @return void
      */
     public function addHandler(ProfitRequestHandlerInterface $handler): void
     {
-        $this->handlers[get_class($handler)] = $handler;
+        $this->profitRequestHandlers[get_class($handler)] = $handler;
     }
 
     /**
@@ -36,6 +38,7 @@ class ProfitRequestHandler implements ProfitRequestHandlerInterface
      */
     public function handle(Request $request, int $type): void
     {
+        /** @var ProfitRequestHandlerInterface $handler */
         foreach ($this->profitRequestHandlers as $handler) {
             if ($handler->supports($type)) {
                 $handler->handle($request);

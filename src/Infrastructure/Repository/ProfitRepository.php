@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Repository;
 
+use App\Domain\Contracts\Repository\ProfitRepository as ProfitRepositoryInterface;
 use App\Infrastructure\Entity\Profit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Profit[]    findAll()
  * @method Profit[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProfitRepository extends ServiceEntityRepository implements \App\Domain\Repository\ProfitRepository
+class ProfitRepository extends ServiceEntityRepository implements ProfitRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

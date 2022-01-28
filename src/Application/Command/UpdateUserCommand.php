@@ -7,17 +7,17 @@ namespace App\Application\Command;
  */
 class UpdateUserCommand extends CreateUserCommand
 {
-    private int $identifier;
+    private string $identifier;
 
     /**
-     * @param int    $identifier
+     * @param string $identifier
      * @param string $email
      * @param string $firstName
      * @param string $lastName
      * @param int    $capital
      * @param string $password
      */
-    public function __construct(int $identifier, string $email, string $firstName, string $lastName, int $capital, string $password)
+    public function __construct(string $identifier, string $email, string $firstName, string $lastName, int $capital, string $password)
     {
         parent::__construct($email, $firstName, $lastName, $capital, $password);
         $this->identifier = $identifier;
@@ -25,9 +25,9 @@ class UpdateUserCommand extends CreateUserCommand
 
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIdentifier(): int
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

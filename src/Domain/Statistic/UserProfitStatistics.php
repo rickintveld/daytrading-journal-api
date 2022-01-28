@@ -3,6 +3,7 @@
 namespace App\Domain\Statistic;
 
 use App\Common\Exception\UserNotDefinedException;
+use App\Domain\Contracts\Statistic\Statistic;
 use App\Domain\Model\User;
 
 /**
@@ -29,7 +30,7 @@ class UserProfitStatistics implements Statistic
      */
     public function getResult(): StatisticResult
     {
-        if (!$this->user) {
+        if (!$this->user instanceof User) {
             throw new UserNotDefinedException();
         }
 

@@ -21,7 +21,7 @@ class UserTest extends TestCase
     public function userProvider(): array
     {
         return [[
-            new User(1, 'trader@journal.nl', 'Password!@#', 'Trading', 'Journal', 40000, [new Profit(1, 1000)])
+            new User(1, 'trader@journal.nl', 'Trading', 'Journal', 40000, 'Password!@#', [new Profit(1, 1000)])
         ]];
     }
 
