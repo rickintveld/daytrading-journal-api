@@ -21,13 +21,13 @@ class CreateUserCommandHandlerTest extends CommandHandlerProvider
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\OptimisticLockException|\App\Common\Exception\UserNotFoundException
      */
     public function testCreateUserCommand(User $user): void
     {
         $userBuilderMock = $this->getMockBuilder(UserBuilder::class)->onlyMethods(['build'])->disableOriginalConstructor()->getMock();
 
-        $this->userRepositoryMock->expects($this->once())->method('findOneByEmail')->with('trader@journal.nl')->willReturn('');
+        $this->userRepositoryMock->expects($this->once())->method('findOneByEmail')->with('trader@journal.nl')->willReturn(null);
         $userBuilderMock->expects($this->once())->method('build')->with([
             'firstName' => 'Trader',
             'lastName' => 'Journal',
@@ -35,30 +35,33 @@ class CreateUserCommandHandlerTest extends CommandHandlerProvider
             'password' => 'Password!@#',
             'capital' => 1000
         ])->willReturn($user);
+
         $this->userRepositoryMock->expects($this->once())->method('store');
 
-        $commandHandler = new CreateUserCommandHandler($this->userRepositoryMock, $userBuilderMock);
-
+        $commandHandler = new CreateUserCommandHandler($this->userRepositoryMock, $userBuilderMock, $this->loggerMock);
         $commandHandler(new CreateUserCommand('trader@journal.nl', 'Trader', 'Journal', 1000, 'Password!@#'));
     }
 
     /**
      * @dataProvider userProvider
      *
-     * @param \App\Infrastructure\Entity\User $user
+     * @param \App\Domain\Model\User $user
+     * @throws \App\Common\Exception\UserAlreadyExists
+     * @throws \App\Common\Exception\UserNotFoundException
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \App\Common\Exception\UserAlreadyExists
      */
     public function testCreateUserCommandToThrowAnError(User $user): void
     {
         $userBuilderMock = $this->getMockBuilder(UserBuilder::class)->onlyMethods(['build'])->disableOriginalConstructor()->getMock();
         $this->userRepositoryMock->expects($this->once())->method('findOneByEmail')->with('trader@journal.nl')->willReturn($user);
+        $this->loggerMock->expects($this->once())->method('error');
 
         $this->expectException(UserAlreadyExists::class);
 
-        $commandHandler = new CreateUserCommandHandler($this->userRepositoryMock, $userBuilderMock);
-
+        $commandHandler = new CreateUserCommandHandler($this->userRepositoryMock, $userBuilderMock, $this->loggerMock);
         $commandHandler(new CreateUserCommand('trader@journal.nl', 'Trader', 'Journal', 1000, 'Password!@#'));
     }
 }

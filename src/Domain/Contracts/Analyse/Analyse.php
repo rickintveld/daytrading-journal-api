@@ -4,9 +4,6 @@ namespace App\Domain\Contracts\Analyse;
 
 use App\Domain\Statistic\StatisticResult;
 
-/**
- * @package App\Domain\Analyse
- */
 interface Analyse
 {
     /**

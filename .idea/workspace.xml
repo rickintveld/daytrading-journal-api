@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c27ffed-2253-433c-89b5-7a486d116591" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Domain/Command/ProfitAddCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Command/ProfitAddCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Model/Profit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Model/Profit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/AddProfitCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/AddProfitCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/BlockUserCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/BlockUserCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/CommandHandlerProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/CommandHandlerProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/CreateUserCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/CreateUserCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/RemoveUserCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/RemoveUserCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/RestoreUserCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/RestoreUserCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/UnblockUserCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/UnblockUserCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/UpdateUserCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/UpdateUserCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Application/CommandHandler/WithdrawCommandHandlerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Application/CommandHandler/WithdrawCommandHandlerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Infrastructure/Builder/UserBuilderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Infrastructure/Builder/UserBuilderTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,6 +239,9 @@
       <path value="$PROJECT_DIR$/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/vendor/symfony/routing" />
       <path value="$PROJECT_DIR$/vendor/symfony/proxy-manager-bridge" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bridge" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
@@ -364,7 +378,7 @@
       <workItem from="1640878589104" duration="12502000" />
       <workItem from="1641226476339" duration="2712000" />
       <workItem from="1641736102001" duration="31000" />
-      <workItem from="1643379520888" duration="832000" />
+      <workItem from="1643379520888" duration="5286000" />
     </task>
     <servers />
   </component>

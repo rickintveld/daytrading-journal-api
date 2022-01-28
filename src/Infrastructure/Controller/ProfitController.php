@@ -4,6 +4,7 @@ namespace App\Infrastructure\Controller;
 
 use App\Infrastructure\RequestHandler\ProfitRequestHandler;
 use App\Infrastructure\RequestHandler\RequestHandler;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,13 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfitController extends AbstractController
 {
     private ProfitRequestHandler $profitRequestHandler;
+    private LoggerInterface $logger;
 
     /**
      * @param \App\Infrastructure\RequestHandler\ProfitRequestHandler $profitRequestHandler
+     * @param \Psr\Log\LoggerInterface                                $logger
      */
-    public function __construct(ProfitRequestHandler $profitRequestHandler)
+    public function __construct(ProfitRequestHandler $profitRequestHandler, LoggerInterface $logger)
     {
         $this->profitRequestHandler = $profitRequestHandler;
+        $this->logger = $logger;
     }
 
     /**
@@ -36,6 +40,8 @@ class ProfitController extends AbstractController
         try {
             $this->profitRequestHandler->handle($request, RequestHandler::PROFIT_ADD_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage()]
@@ -60,6 +66,8 @@ class ProfitController extends AbstractController
         try {
             $this->profitRequestHandler->handle($request, RequestHandler::PROFIT_WITHDRAW_TYPE);
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage()

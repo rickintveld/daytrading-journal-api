@@ -23,22 +23,20 @@ class WithdrawCommandHandlerTest extends CommandHandlerProvider
         $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn($user);
         $this->userRepositoryMock->expects($this->once())->method('store');
 
-        $commandHandler = new WithdrawCommandHandler($this->userRepositoryMock);
+        $commandHandler = new WithdrawCommandHandler($this->userRepositoryMock, $this->loggerMock);
 
-        $commandHandler(new WithdrawCommand(1, 1000));
+        $commandHandler(new WithdrawCommand('1', 1000));
     }
 
     /**
      * @throws \Exception
      */
-    public function testWithdrawCommandToThrowAnError(): void
+    public function testWithdrawCommandToLogAnError(): void
     {
-        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn('');
+        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with('1')->willThrowException(new UserNotFoundException());
+        $this->loggerMock->expects($this->once())->method('error');
 
-        $this->expectException(UserNotFoundException::class);
-
-        $commandHandler = new WithdrawCommandHandler($this->userRepositoryMock);
-
-        $commandHandler(new WithdrawCommand(1, 1000));
+        $commandHandler = new WithdrawCommandHandler($this->userRepositoryMock, $this->loggerMock);
+        $commandHandler(new WithdrawCommand('1', 1000));
     }
 }

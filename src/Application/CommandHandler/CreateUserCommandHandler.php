@@ -7,6 +7,7 @@ use App\Common\Contracts\CommandHandler;
 use App\Common\Exception\UserAlreadyExists;
 use App\Domain\Builder\UserBuilder;
 use App\Domain\Contracts\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 
 /**
  * @package App\Application\CommandHandler
@@ -15,15 +16,18 @@ class CreateUserCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
     private UserBuilder $userBuilder;
+    private LoggerInterface $logger;
 
     /**
      * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
      * @param \App\Domain\Builder\UserBuilder                 $userBuilder
+     * @param \Psr\Log\LoggerInterface                        $logger
      */
-    public function __construct(UserRepository $userRepository, UserBuilder $userBuilder)
+    public function __construct(UserRepository $userRepository, UserBuilder $userBuilder, LoggerInterface $logger)
     {
         $this->userRepository = $userRepository;
         $this->userBuilder = $userBuilder;
+        $this->logger = $logger;
     }
 
     /**
@@ -41,7 +45,9 @@ class CreateUserCommandHandler implements CommandHandler
         $user = $this->userRepository->findOneByEmail($command->getEmail());
 
         if ($user) {
-            throw new UserAlreadyExists(sprintf('User with e-mail %s already exists', $command->getEmail()));
+            $message = sprintf('User with e-mail %s already exists', $command->getEmail());
+            $this->logger->error($message);
+            throw new UserAlreadyExists($message);
         }
 
         $this->handle($command);

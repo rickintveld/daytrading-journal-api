@@ -2,9 +2,6 @@
 
 namespace App\Domain\Contracts\Builder;
 
-/**
- * @package App\Domain\Builder
- */
 interface Builder
 {
     /**

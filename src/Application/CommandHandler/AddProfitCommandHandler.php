@@ -8,6 +8,7 @@ use App\Common\Exception\UserNotFoundException;
 use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\Profit;
 use App\Domain\Model\User;
+use Psr\Log\LoggerInterface;
 
 /**
  * @package App\Application\CommandHandler
@@ -15,13 +16,16 @@ use App\Domain\Model\User;
 class AddProfitCommandHandler implements CommandHandler
 {
     private UserRepository $userRepository;
+    private LoggerInterface $logger;
 
     /**
      * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
+     * @param \Psr\Log\LoggerInterface                        $logger
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, LoggerInterface $logger)
     {
         $this->userRepository = $userRepository;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,7 +38,7 @@ class AddProfitCommandHandler implements CommandHandler
             $user = $this->userRepository->findOneByIdentifier($command->getUserId());
             $this->handle($command, $user);
         } catch (UserNotFoundException $exception) {
-
+            $this->logger->error($exception->getMessage());
         }
     }
 

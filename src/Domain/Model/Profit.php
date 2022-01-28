@@ -4,23 +4,23 @@ namespace App\Domain\Model;
 
 class Profit
 {
-    private int $userId;
+    private string $userId;
     private float $amount;
 
     /**
-     * @param int   $userId
+     * @param string   $userId
      * @param float $amount
      */
-    public function __construct(int $userId, float $amount)
+    public function __construct(string $userId, float $amount)
     {
         $this->userId = $userId;
         $this->amount = $amount;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId(): int
+    public function getUserId(): string
     {
         return $this->userId;
     }

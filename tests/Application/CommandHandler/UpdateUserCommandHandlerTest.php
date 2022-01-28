@@ -16,7 +16,6 @@ class UpdateUserCommandHandlerTest extends CommandHandlerProvider
      * @dataProvider userProvider
      *
      * @param \App\Domain\Model\User $user
-     * @throws \App\Common\Exception\UserNotFoundException
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\ORMException
@@ -27,24 +26,23 @@ class UpdateUserCommandHandlerTest extends CommandHandlerProvider
         $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn($user);
         $this->userRepositoryMock->expects($this->once())->method('store');
 
-        $commandHandler = new UpdateUserCommandHandler($this->userRepositoryMock);
+        $commandHandler = new UpdateUserCommandHandler($this->userRepositoryMock, $this->loggerMock);
 
-        $commandHandler(new UpdateUserCommand(1, 'trader@journal.nl', 'Trader', 'Journal', 1000, 'Password!@#'));
+        $commandHandler(new UpdateUserCommand('1', 'trader@journal.nl', 'Trader', 'Journal', 1000, 'Password!@#'));
     }
 
     /**
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \App\Common\Exception\UserNotFoundException
      */
-    public function testUpdateUserCommandToThrowAnError(): void
+    public function testUpdateUserCommandToLogAnError(): void
     {
-        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn('');
+        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with('1')->willThrowException(new UserNotFoundException());
+        $this->loggerMock->expects($this->once())->method('error');
 
-        $this->expectException(UserNotFoundException::class);
-
-        $commandHandler = new UpdateUserCommandHandler($this->userRepositoryMock);
-
-        $commandHandler(new UpdateUserCommand(1, 'trader@journal.nl', 'Trader', 'Journal', 1000, 'Password!@#'));
+        $commandHandler = new UpdateUserCommandHandler($this->userRepositoryMock, $this->loggerMock);
+        $commandHandler(new UpdateUserCommand('1', 'trader@journal.nl', 'Trader', 'Journal', 1000, 'Password!@#'));
     }
 }

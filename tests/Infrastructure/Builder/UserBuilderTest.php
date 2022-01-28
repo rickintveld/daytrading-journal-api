@@ -2,9 +2,8 @@
 
 namespace App\Tests\Infrastructure\Builder;
 
-use App\Infrastructure\Builder\UserBuilder;
-use App\Infrastructure\Entity\User;
-use App\Infrastructure\Entity\UserSettings;
+use App\Domain\Builder\UserBuilder;
+use App\Domain\Model\User;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,13 +12,18 @@ use PHPUnit\Framework\TestCase;
  */
 class UserBuilderTest extends TestCase
 {
-    /** @var User */
-    private $user;
-
     public function testBuild(): void
     {
+        $userMock = $this->createMock(User::class);
+        $userMock->method('getPassword')->willReturn('uAsmbaYK$6z=&75r');
+        $userMock->method('getStartCapital')->willReturn(10000.00);
+        $userMock->method('getCapital')->willReturn(40000.00);
+        $userMock->method('getFirstName')->willReturn('Trading');
+        $userMock->method('getLastName')->willReturn('Journal');
+        $userMock->method('getEmail')->willReturn('journal@trading.nl');
+
         $userBuilderMock = $this->createMock(UserBuilder::class);
-        $userBuilderMock->method('build')->willReturn($this->user);
+        $userBuilderMock->method('build')->willReturn($userMock);
 
         $user = $userBuilderMock->build([
             'firstName' => 'Trading',
@@ -30,25 +34,10 @@ class UserBuilderTest extends TestCase
         ]);
 
         self::assertEquals('uAsmbaYK$6z=&75r', $user->getPassword());
-        self::assertNotNull($user->getUserSettings());
-        self::assertEquals(40000, $user->getUserSettings()->getCapital());
+        self::assertNotNull($user->getStartCapital());
+        self::assertEquals(40000.00, $user->getCapital());
         self::assertEquals('Trading', $user->getFirstName());
         self::assertEquals('Journal', $user->getLastName());
         self::assertEquals('journal@trading.nl', $user->getEmail());
-    }
-
-    protected function setUp(): void
-    {
-        $this->user = new User();
-        $this->user->setEmail('journal@trading.nl')
-            ->setFirstName('Trading')
-            ->setLastName('Journal')
-            ->setPassword('uAsmbaYK$6z=&75r')
-            ->setUserSettings((new UserSettings())->setCapital(40000));
-    }
-
-    protected function tearDown(): void
-    {
-        unset($this->user);
     }
 }

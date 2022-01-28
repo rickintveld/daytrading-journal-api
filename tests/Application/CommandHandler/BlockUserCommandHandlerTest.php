@@ -19,22 +19,21 @@ class BlockUserCommandHandlerTest extends CommandHandlerProvider
         $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn($user);
         $this->userRepositoryMock->expects($this->once())->method('store');
 
-        $commandHandler = new BlockUserCommandHandler($this->userRepositoryMock);
+        $commandHandler = new BlockUserCommandHandler($this->userRepositoryMock, $this->loggerMock);
 
-        $commandHandler(new BlockUserCommand(1));
+        $commandHandler(new BlockUserCommand('1'));
     }
 
     /**
      * @throws \Exception
      */
-    public function testBlockUserCommandToThrowAnError(): void
+    public function testBlockUserCommandToLogAnError(): void
     {
-        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with(1)->willReturn('');
+        $this->userRepositoryMock->expects($this->once())->method('findOneByIdentifier')->with('1')->willThrowException(new UserNotFoundException());
+        $this->loggerMock->expects($this->once())->method('error');
 
-        $this->expectException(UserNotFoundException::class);
+        $commandHandler = new BlockUserCommandHandler($this->userRepositoryMock, $this->loggerMock);
 
-        $commandHandler = new BlockUserCommandHandler($this->userRepositoryMock);
-
-        $commandHandler(new BlockUserCommand(1));
+        $commandHandler(new BlockUserCommand('1'));
     }
 }

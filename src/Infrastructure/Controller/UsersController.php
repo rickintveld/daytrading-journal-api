@@ -4,6 +4,7 @@ namespace App\Infrastructure\Controller;
 
 use App\Application\Query\AllUsersQuery;
 use App\Common\Contracts\QueryBus;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class UsersController extends AbstractController
 {
     private QueryBus $queryBus;
+    private LoggerInterface $logger;
 
-    public function __construct(QueryBus $queryBus) {
+    /**
+     * @param \App\Common\Contracts\QueryBus $queryBus
+     * @param \Psr\Log\LoggerInterface       $logger
+     */
+    public function __construct(QueryBus $queryBus, LoggerInterface $logger)
+    {
         $this->queryBus = $queryBus;
+        $this->logger = $logger;
     }
 
     /**
@@ -31,6 +39,8 @@ class UsersController extends AbstractController
         try {
             $users = $this->queryBus->query(new AllUsersQuery());
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -52,6 +62,8 @@ class UsersController extends AbstractController
         try {
             $users = $this->queryBus->query(new AllUsersQuery(true, false));
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
@@ -73,6 +85,8 @@ class UsersController extends AbstractController
         try {
             $users = $this->queryBus->query(new AllUsersQuery(false, true));
         } catch (HandlerFailedException $exception) {
+            $this->logger->error($exception->getPrevious()->getMessage());
+
             return $this->json([
                 'status' => Response::HTTP_NO_CONTENT,
                 'message' => $exception->getPrevious()->getMessage(),
