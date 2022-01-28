@@ -2,8 +2,8 @@
 
 namespace App\Domain\Command;
 
-use App\Domain\Analyse\Analyse;
-use App\Domain\Repository\UserRepository;
+use App\Domain\Contracts\Analyse\Analyse;
+use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Statistic\StatisticResult;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,8 +31,8 @@ class AnalyseUserProfitCommand extends Command
 
     /**
      * AnalyseUserProfitCommand constructor.
-     * @param \App\Domain\Analyse\Analyse           $analyser
-     * @param \App\Domain\Repository\UserRepository $userRepository
+     * @param \App\Domain\Contracts\Analyse\Analyse           $analyser
+     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
      */
     public function __construct(Analyse $analyser, UserRepository $userRepository)
     {

@@ -4,7 +4,8 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\UpdateUserCommand;
 use App\Common\Exception\InvalidArgumentException;
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
+use App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface;
 
 /**
  * @package App\Infrastructure\RequestHandler
@@ -35,7 +36,7 @@ class UpdateUserRequestHandler extends RequestHandler implements UserRequestHand
 
     /**
      * @param array<string, int|string> $payload
-     * @return \App\Common\Interfaces\Command
+     * @return \App\Common\Contracts\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command

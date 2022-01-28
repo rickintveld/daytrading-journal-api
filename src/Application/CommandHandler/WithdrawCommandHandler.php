@@ -3,10 +3,10 @@
 namespace App\Application\CommandHandler;
 
 use App\Application\Command\WithdrawCommand;
+use App\Common\Contracts\CommandHandler;
 use App\Common\Exception\UserNotFoundException;
-use App\Common\Interfaces\CommandHandler;
+use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\User;
-use App\Domain\Repository\UserRepository;
 
 /**
  * @package App\Application\CommandHandler
@@ -16,7 +16,7 @@ class WithdrawCommandHandler implements CommandHandler
     private UserRepository $userRepository;
 
     /**
-     * @param \App\Domain\Repository\UserRepository $userRepository
+     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {
@@ -25,17 +25,21 @@ class WithdrawCommandHandler implements CommandHandler
 
     /**
      * @param \App\Application\Command\WithdrawCommand $command
-     * @throws \Exception
+     *
+     * @throws \App\Common\Exception\InvalidFundsException
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function __invoke(WithdrawCommand $command): void
     {
-        $user = $this->userRepository->findOneByIdentifier($command->getUserId());
+        try {
+            $user = $this->userRepository->findOneByIdentifier($command->getUserId());
+            $this->handle($command, $user);
+        } catch (UserNotFoundException $exception) {
 
-        if (!$user) {
-            throw new UserNotFoundException(sprintf('No user found for id %s', $command->getUserId()));
         }
-
-        $this->handle($command, $user);
     }
 
     /**

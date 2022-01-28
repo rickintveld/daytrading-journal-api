@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Controller;
 
 use App\Application\Query\AllUsersQuery;
-use App\Common\Interfaces\QueryBus;
+use App\Common\Contracts\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

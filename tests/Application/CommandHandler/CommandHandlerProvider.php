@@ -2,9 +2,9 @@
 
 namespace App\Tests\Application\CommandHandler;
 
+use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\Profit;
 use App\Domain\Model\User;
-use App\Domain\Repository\UserRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,7 +23,7 @@ abstract class CommandHandlerProvider extends TestCase
     {
         $profit = new Profit(1, 1000);
 
-        $user = new User(1, 'trader@journal.nl', 'Password!@#', 'Trader', 'Journal', 40000, [$profit]);
+        $user = new User(1, 'trader@journal.nl', 'Trader', 'Journal', 40000, 'Password!@#', [$profit]);
 
         return [
             [

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Interfaces;
+namespace App\Common\Contracts;
 
 /**
  * @package App\Common\Interfaces
@@ -8,7 +8,7 @@ namespace App\Common\Interfaces;
 interface CommandBus
 {
     /**
-     * @param \App\Common\Interfaces\Command $command
+     * @param \App\Common\Contracts\Command $command
      */
     public function dispatch(Command $command): void;
 }

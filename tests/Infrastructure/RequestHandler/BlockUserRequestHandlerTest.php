@@ -3,7 +3,7 @@
 namespace App\Tests\Infrastructure\RequestHandler;
 
 use App\Application\Command\BlockUserCommand;
-use App\Common\Interfaces\CommandBus;
+use App\Common\Contracts\CommandBus;
 use App\Infrastructure\RequestHandler\BlockUserRequestHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;

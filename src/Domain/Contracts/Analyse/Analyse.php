@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Analyse;
+namespace App\Domain\Contracts\Analyse;
 
 use App\Domain\Statistic\StatisticResult;
 
@@ -10,7 +10,7 @@ use App\Domain\Statistic\StatisticResult;
 interface Analyse
 {
     /**
-     * @param \App\Domain\Analyse\Analysable $analysable
+     * @param \App\Domain\Contracts\Analyse\Analysable $analysable
      *
      * @return $this
      */

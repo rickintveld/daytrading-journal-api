@@ -4,7 +4,8 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\UnBlockUserCommand;
 use App\Common\Exception\InvalidArgumentException;
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
+use App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface;
 
 /**
  * @package App\Infrastructure\RequestHandler
@@ -33,7 +34,7 @@ class UnblockUserRequestHandler extends RequestHandler implements UserRequestHan
 
     /**
      * @param array<int> $payload
-     * @return \App\Common\Interfaces\Command
+     * @return \App\Common\Contracts\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command

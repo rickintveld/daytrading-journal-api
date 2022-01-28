@@ -3,10 +3,10 @@
 namespace App\Application\CommandHandler;
 
 use App\Application\Command\RestoreUserCommand;
+use App\Common\Contracts\CommandHandler;
 use App\Common\Exception\UserNotFoundException;
-use App\Common\Interfaces\CommandHandler;
+use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\User;
-use App\Domain\Repository\UserRepository;
 
 /**
  * @package App\Application\CommandHandler
@@ -16,7 +16,7 @@ class RestoreUserCommandHandler implements CommandHandler
     private UserRepository $userRepository;
 
     /**
-     * @param \App\Domain\Repository\UserRepository $userRepository
+     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {
@@ -29,13 +29,12 @@ class RestoreUserCommandHandler implements CommandHandler
      */
     public function __invoke(RestoreUserCommand $command): void
     {
-        $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
+        try {
+            $user = $this->userRepository->findOneByIdentifier($command->getIdentifier());
+            $this->handle($user);
+        } catch (UserNotFoundException $exception) {
 
-        if (!$user) {
-            throw new UserNotFoundException('No user found');
         }
-
-        $this->handle($user);
     }
 
     /**

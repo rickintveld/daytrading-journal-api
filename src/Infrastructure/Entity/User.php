@@ -7,19 +7,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User implements PasswordAuthenticatedUserInterface
+class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string")
      */
-    private int $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -27,9 +28,9 @@ class User implements PasswordAuthenticatedUserInterface
     private string $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $password;
+    private ?string $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -71,7 +72,7 @@ class User implements PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Profit::class, mappedBy="user", cascade={"persist"})
      */
-    private ?ArrayCollection $profits;
+    private ?Collection $profits;
 
     public function __construct()
     {
@@ -83,18 +84,18 @@ class User implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      * @return \App\Infrastructure\Entity\User
      */
-    public function setId(int $id): self
+    public function setId(string $id): self
     {
         $this->id = $id;
 
@@ -129,10 +130,10 @@ class User implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
      * @return \App\Infrastructure\Entity\User
      */
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -283,7 +284,7 @@ class User implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Profit[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProfits(): Collection
     {
@@ -292,12 +293,13 @@ class User implements PasswordAuthenticatedUserInterface
 
     /**
      * @param \App\Infrastructure\Entity\Profit $profit
+     *
      * @return \App\Infrastructure\Entity\User
      */
     public function addProfit(Profit $profit): self
     {
         if (!$this->profits->contains($profit)) {
-            $this->profits[] = $profit;
+            $this->profits->add($profit);
             $profit->setUser($this);
         }
 
@@ -310,13 +312,51 @@ class User implements PasswordAuthenticatedUserInterface
      */
     public function removeProfit(Profit $profit): self
     {
-        if ($this->profits->removeElement($profit)) {
-            // set the owning side to null (unless already changed)
-            if ($profit->getUser() === $this) {
-                $profit->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->profits->removeElement($profit) && $profit->getUser() === $this) {
+            $profit->setUser(null);
         }
 
         return $this;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getRoles(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt(): string
+    {
+        return $this->getPassword();
+    }
+
+    /**
+     * @return void
+     */
+    public function eraseCredentials(): void
+    {
+        $this->password = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->getEmail();
     }
 }

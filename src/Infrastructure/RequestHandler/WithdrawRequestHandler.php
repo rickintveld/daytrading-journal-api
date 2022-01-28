@@ -4,12 +4,13 @@ namespace App\Infrastructure\RequestHandler;
 
 use App\Application\Command\WithdrawCommand;
 use App\Common\Exception\InvalidArgumentException;
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
+use App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface;
 
 /**
  * @package App\Infrastructure\RequestHandler
  */
-class WithdrawRequestHandler extends RequestHandler
+class WithdrawRequestHandler extends RequestHandler implements ProfitRequestHandlerInterface
 {
     /**
      * @param int $requestType
@@ -35,7 +36,7 @@ class WithdrawRequestHandler extends RequestHandler
 
     /**
      * @param array{userId: int, amount: float} $payload
-     * @return \App\Common\Interfaces\Command
+     * @return \App\Common\Contracts\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command

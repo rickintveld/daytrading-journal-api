@@ -2,8 +2,8 @@
 
 namespace App\Common\Bus;
 
-use App\Common\Interfaces\Command;
-use App\Common\Interfaces\CommandBus;
+use App\Common\Contracts\Command;
+use App\Common\Contracts\CommandBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
@@ -22,7 +22,7 @@ final class MessengerCommandBus implements CommandBus
     }
 
     /**
-     * @param \App\Common\Interfaces\Command $command
+     * @param \App\Common\Contracts\Command $command
      */
     public function dispatch(Command $command): void
     {

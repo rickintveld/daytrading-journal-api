@@ -2,13 +2,9 @@
 
 namespace App\Domain\Model;
 
-/**
- * @package App\Domain\Model
- */
 class Profit
 {
     private int $userId;
-
     private float $amount;
 
     /**

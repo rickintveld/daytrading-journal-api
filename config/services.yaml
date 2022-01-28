@@ -17,10 +17,10 @@ services:
     tags: [serializer.normalizer]
 
   _instanceof:
-    App\Infrastructure\RequestHandler\UserRequestHandlerInterface:
-      tags: [ 'user.request.handler' ]
-    App\Infrastructure\RequestHandler\ProfitRequestHandlerInterface:
-      tags: [ 'profit.request.handler' ]
+    App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface:
+      tags: [ 'user.handler' ]
+    App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface:
+      tags: [ 'profit.handler' ]
 
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
@@ -48,7 +48,9 @@ services:
         - { name: messenger.message_handler, bus: command.bus }
 
   App\Infrastructure\RequestHandler\UserRequestHandler:
-    arguments: [ !tagged user.request.handler, !tagged messenger.message_handler ]
+    arguments:
+      - !tagged_iterator user.handler
 
   App\Infrastructure\RequestHandler\ProfitRequestHandler:
-    arguments: [ !tagged profit.request.handler, !tagged messenger.message_handler ]
+    arguments:
+      - !tagged_iterator profit.handler

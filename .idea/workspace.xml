@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c27ffed-2253-433c-89b5-7a486d116591" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandlerInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/RequestHandlerInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UserRequestHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/RequestHandler/UserRequestHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Command/ProfitAddCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Command/ProfitAddCommand.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,6 +110,9 @@
       </list>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
@@ -165,15 +166,12 @@
       <path value="$PROJECT_DIR$/vendor/symfony/flex" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
       <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
       <path value="$PROJECT_DIR$/vendor/symfony/redis-messenger" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/vendor/symfony/browser-kit" />
       <path value="$PROJECT_DIR$/vendor/symfony/amqp-messenger" />
-      <path value="$PROJECT_DIR$/vendor/symfony/proxy-manager-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
@@ -228,6 +226,8 @@
       <path value="$PROJECT_DIR$/vendor/qossmic/deptrac-shim" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-uuid" />
       <path value="$PROJECT_DIR$/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/vendor/symfony/proxy-manager-bridge" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
@@ -282,9 +282,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Infrastructure/RequestHandler" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Infrastructure/Contracts/RequestHandler" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -294,18 +296,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Infrastructure/Contracts/RequestHandler" />
       <recent name="$PROJECT_DIR$/src/Infrastructure/RequestHandler" />
       <recent name="$PROJECT_DIR$/src/Domain" />
       <recent name="$PROJECT_DIR$/src/Infrastructure/Controller" />
       <recent name="$PROJECT_DIR$/datafixtures" />
-      <recent name="$PROJECT_DIR$/tests/Application/QueryHandler" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Infrastructure" />
       <recent name="$PROJECT_DIR$/src/Domain" />
       <recent name="$PROJECT_DIR$/tests/Domain/Model" />
       <recent name="$PROJECT_DIR$/tests/Infrastructure/Controller" />
       <recent name="$PROJECT_DIR$/tests/Infrastructure" />
-      <recent name="$PROJECT_DIR$/src/Infrastructure" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.AllUserQueryHandlerTest.testAllUserQuery">
@@ -358,6 +360,11 @@
       <workItem from="1636724480362" duration="1260000" />
       <workItem from="1637055713544" duration="638000" />
       <workItem from="1637164068690" duration="4107000" />
+      <workItem from="1640605970379" duration="570000" />
+      <workItem from="1640878589104" duration="12502000" />
+      <workItem from="1641226476339" duration="2712000" />
+      <workItem from="1641736102001" duration="31000" />
+      <workItem from="1643379520888" duration="832000" />
     </task>
     <servers />
   </component>

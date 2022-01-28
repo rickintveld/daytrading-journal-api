@@ -21,7 +21,7 @@ abstract class QueryHandlerProvider extends TestCase
      */
     public function userProvider(): array
     {
-        $user = new User(1, 'query@test.nl', 'Password!@#', 'Trader', 'Journal', 40000, [new Profit(1, 1000)]);
+        $user = new User(1, 'query@test.nl', 'Trader', 'Journal', 40000, 'Password!@#', [new Profit(1, 1000)]);
 
         return [
             [

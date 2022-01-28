@@ -2,32 +2,31 @@
 
 namespace App\Application\Command;
 
-use App\Common\Interfaces\Command;
+use App\Common\Contracts\Command;
 
 /**
  * @package App\Application\Command
  */
 class AddProfitCommand implements Command
 {
-    private int $userId;
-
+    private string $userId;
     private float $profit;
 
 
     /**
-     * @param int   $userId
-     * @param float $profit
+     * @param string $userId
+     * @param float  $profit
      */
-    public function __construct(int $userId, float $profit)
+    public function __construct(string $userId, float $profit)
     {
         $this->userId = $userId;
         $this->profit = $profit;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getUserId(): int
+    public function getUserId(): string
     {
         return $this->userId;
     }

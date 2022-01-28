@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\RequestHandler;
 
+use App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,7 +24,8 @@ class UserRequestHandler
     }
 
     /**
-     * @param \App\Infrastructure\RequestHandler\UserRequestHandlerInterface $handler
+     * @param \App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface $handler
+     * @return void
      */
     public function addHandler(UserRequestHandlerInterface $handler): void
     {
@@ -36,6 +38,7 @@ class UserRequestHandler
      */
     public function handle(Request $request, int $type): void
     {
+        /** @var UserRequestHandlerInterface $handler */
         foreach ($this->userRequestHandlers as $handler) {
             if ($handler->supports($type)) {
                 $handler->handle($request);
