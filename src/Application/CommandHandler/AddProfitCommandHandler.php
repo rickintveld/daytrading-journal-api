@@ -8,29 +8,19 @@ use App\Common\Exception\UserNotFoundException;
 use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\Profit;
 use App\Domain\Model\User;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Psr\Log\LoggerInterface;
 
-/**
- * @package App\Application\CommandHandler
- */
 class AddProfitCommandHandler implements CommandHandler
 {
-    private UserRepository $userRepository;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
-     * @param \Psr\Log\LoggerInterface                        $logger
-     */
-    public function __construct(UserRepository $userRepository, LoggerInterface $logger)
+    public function __construct(private UserRepository $userRepository, private LoggerInterface $logger)
     {
-        $this->userRepository = $userRepository;
-        $this->logger = $logger;
     }
 
     /**
-     * @param \App\Application\Command\AddProfitCommand $command
-     * @throws \Exception
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function __invoke(AddProfitCommand $command): void
     {
@@ -43,8 +33,6 @@ class AddProfitCommandHandler implements CommandHandler
     }
 
     /**
-     * @param \App\Application\Command\AddProfitCommand $command
-     * @param \App\Domain\Model\User                    $user
      * @throws \Exception
      */
     private function handle(AddProfitCommand $command, User $user): void

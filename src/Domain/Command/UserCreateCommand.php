@@ -16,16 +16,9 @@ class UserCreateCommand extends Command
     protected static $defaultName = 'dtj:user-create';
     protected static $defaultDescription = 'Create a new trader account';
 
-    private CommandBus $commandBus;
-
-    /**
-     * @param \App\Common\Contracts\CommandBus $commandBus
-     */
-    public function __construct(CommandBus $commandBus)
+    public function __construct(private CommandBus $commandBus)
     {
         parent::__construct(self::$defaultName);
-
-        $this->commandBus = $commandBus;
     }
 
     protected function configure(): void
@@ -37,10 +30,6 @@ class UserCreateCommand extends Command
             ->addArgument('password', InputArgument::REQUIRED, 'The password of the traders account');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $questions = [];
@@ -71,12 +60,6 @@ class UserCreateCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -95,9 +78,6 @@ class UserCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function provideEmailQuestion(): Question
     {
         $question = new Question('Please provide an e-mail address: ');
@@ -112,9 +92,6 @@ class UserCreateCommand extends Command
         return $question;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function provideFirstnameQuestion(): Question
     {
         $question = new Question('Please provide the firstname: ');
@@ -129,9 +106,6 @@ class UserCreateCommand extends Command
         return $question;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function provideLastnameQuestion(): Question
     {
         $question = new Question('Please provide the lastname: ');
@@ -146,9 +120,6 @@ class UserCreateCommand extends Command
         return $question;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function provideCapitalQuestion(): Question
     {
         $question = new Question('Please provide the capital: ');
@@ -163,9 +134,6 @@ class UserCreateCommand extends Command
         return $question;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function providePasswordQuestion(): Question
     {
         $question = new Question('Please provide a password: ');

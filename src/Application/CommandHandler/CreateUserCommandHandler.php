@@ -5,40 +5,31 @@ namespace App\Application\CommandHandler;
 use App\Application\Command\CreateUserCommand;
 use App\Common\Contracts\CommandHandler;
 use App\Common\Exception\UserAlreadyExists;
+use App\Common\Exception\UserNotFoundException;
 use App\Domain\Builder\UserBuilder;
 use App\Domain\Contracts\Repository\UserRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Psr\Log\LoggerInterface;
 
-/**
- * @package App\Application\CommandHandler
- */
 class CreateUserCommandHandler implements CommandHandler
 {
-    private UserRepository $userRepository;
-    private UserBuilder $userBuilder;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
-     * @param \App\Domain\Builder\UserBuilder                 $userBuilder
-     * @param \Psr\Log\LoggerInterface                        $logger
-     */
-    public function __construct(UserRepository $userRepository, UserBuilder $userBuilder, LoggerInterface $logger)
-    {
-        $this->userRepository = $userRepository;
-        $this->userBuilder = $userBuilder;
-        $this->logger = $logger;
+    public function __construct(
+        private UserRepository $userRepository,
+        private UserBuilder $userBuilder,
+        private LoggerInterface $logger
+    ) {
     }
 
     /**
-     * @param \App\Application\Command\CreateUserCommand $command
-     *
-     * @throws \App\Common\Exception\UserAlreadyExists
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws UserAlreadyExists
+     * @throws UserNotFoundException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function __invoke(CreateUserCommand $command): void
     {
@@ -54,9 +45,8 @@ class CreateUserCommandHandler implements CommandHandler
     }
 
     /**
-     * @param \App\Application\Command\CreateUserCommand $command
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      * @throws \Exception
      */
     private function handle(CreateUserCommand $command): void

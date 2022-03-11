@@ -7,22 +7,14 @@ use App\Common\Exception\InvalidArgumentException;
 use App\Common\Contracts\Command;
 use App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface;
 
-/**
- * @package App\Infrastructure\RequestHandler
- */
 class WithdrawRequestHandler extends RequestHandler implements ProfitRequestHandlerInterface
 {
-    /**
-     * @param int $requestType
-     * @return bool
-     */
     public function supports(int $requestType): bool
     {
         return RequestHandler::PROFIT_WITHDRAW_TYPE === $requestType;
     }
 
     /**
-     * @param array{userId: int, amount: float} $payload
      * @throws \Exception
      */
     protected function validatePayload(array $payload): void
@@ -35,8 +27,6 @@ class WithdrawRequestHandler extends RequestHandler implements ProfitRequestHand
     }
 
     /**
-     * @param array{userId: int, amount: float} $payload
-     * @return \App\Common\Contracts\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command

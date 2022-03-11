@@ -6,9 +6,6 @@ use App\Common\Contracts\Command;
 use App\Common\Contracts\CommandBus;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @package App\Infrastructure\RequestHandler
- */
 abstract class RequestHandler
 {
     public const USER_CREATE_TYPE = 1;
@@ -32,19 +29,10 @@ abstract class RequestHandler
         self::PROFIT_WITHDRAW_TYPE
     ];
 
-    private CommandBus $commandBus;
-
-    /**
-     * @param \App\Common\Contracts\CommandBus $commandBus
-     */
-    public function __construct(CommandBus $commandBus)
+    public function __construct(private CommandBus $commandBus)
     {
-        $this->commandBus = $commandBus;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function handle(Request $request): void
     {
         $payload = $request->toArray();
@@ -54,20 +42,9 @@ abstract class RequestHandler
         $this->commandBus->dispatch($this->createCommand($payload));
     }
 
-    /**
-     * @param int<RequestHandler::REQUEST_TYPES> $requestType
-     * @return bool
-     */
     abstract public function supports(int $requestType): bool;
 
-    /**
-     * @param array $payload
-     */
     abstract protected function validatePayload(array $payload): void;
 
-    /**
-     * @param array $payload
-     * @return \App\Common\Contracts\Command
-     */
     abstract protected function createCommand(array $payload): Command;
 }

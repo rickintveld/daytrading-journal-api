@@ -13,27 +13,16 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @package App\Infrastructure\Controller
+ * @Route("/profit")
  */
 class ProfitController extends AbstractController
 {
-    private ProfitRequestHandler $profitRequestHandler;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Infrastructure\RequestHandler\ProfitRequestHandler $profitRequestHandler
-     * @param \Psr\Log\LoggerInterface                                $logger
-     */
-    public function __construct(ProfitRequestHandler $profitRequestHandler, LoggerInterface $logger)
+    public function __construct(private ProfitRequestHandler $profitRequestHandler, private LoggerInterface $logger)
     {
-        $this->profitRequestHandler = $profitRequestHandler;
-        $this->logger = $logger;
     }
 
     /**
-     * @Route("/profit/add", name="profit-add", methods={"POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @Route("/add", name="profit-add", methods={"POST"})
      */
     public function add(Request $request): JsonResponse
     {
@@ -57,9 +46,7 @@ class ProfitController extends AbstractController
     }
 
     /**
-     * @Route("/profit/withdraw", name="profit-withdraw", methods={"POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @Route("/withdraw", name="profit-withdraw", methods={"POST"})
      */
     public function withdraw(Request $request): JsonResponse
     {

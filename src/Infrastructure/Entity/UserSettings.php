@@ -47,64 +47,40 @@ class UserSettings
         $this->updatedAt = new \DateTimeImmutable();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }
 
-    /**
-     * @return \App\Infrastructure\Entity\User|null
-     */
-    public function getUser(): ?User
+    public function getUser(): User|null
     {
         return $this->user;
     }
 
-    /**
-     * @param \App\Infrastructure\Entity\User|null $user
-     * @return \App\Infrastructure\Entity\UserSettings
-     */
-    public function setUser(?User $user): self
+    public function setUser(User|null $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getCapital(): ?int
+    public function getCapital(): int|null
     {
         return $this->capital;
     }
 
-    /**
-     * @param int|null $capital
-     * @return \App\Infrastructure\Entity\UserSettings
-     */
-    public function setCapital(?int $capital): self
+    public function setCapital(int $capital): self
     {
         $this->capital = $capital;
 
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $createdAt
-     * @return \App\Infrastructure\Entity\UserSettings
-     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -112,18 +88,11 @@ class UserSettings
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $updatedAt
-     * @return \App\Infrastructure\Entity\UserSettings
-     */
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;

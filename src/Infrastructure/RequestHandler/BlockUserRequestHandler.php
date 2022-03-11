@@ -7,24 +7,13 @@ use App\Common\Contracts\Command;
 use \App\Common\Exception\InvalidArgumentException;
 use App\Infrastructure\Contracts\RequestHandler\UserRequestHandlerInterface;
 
-/**
- * @package App\Infrastructure\RequestHandler
- */
 class BlockUserRequestHandler extends RequestHandler implements UserRequestHandlerInterface
 {
-    /**
-     * @param int $requestType
-     * @return bool
-     */
     public function supports(int $requestType): bool
     {
         return RequestHandler::USER_BLOCK_TYPE === $requestType;
     }
 
-    /**
-     * @param array<int> $payload
-     * @throws \Exception
-     */
     protected function validatePayload(array $payload): void
     {
         if (!array_key_exists('identifier', $payload)) {
@@ -33,8 +22,6 @@ class BlockUserRequestHandler extends RequestHandler implements UserRequestHandl
     }
 
     /**
-     * @param array<int> $payload
-     * @return \App\Common\Contracts\Command
      * @throws \Exception
      */
     protected function createCommand(array $payload): Command

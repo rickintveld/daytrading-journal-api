@@ -10,253 +10,147 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterface
 {
-    private string $id;
-    private string $email;
-    private string $firstName;
-    private string $lastName;
-    private float $startCapital;
-    private ?string $password;
-    private ?array $profits;
-    private bool $blocked;
-    private bool $removed;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    /**
-     * User constructor.
-     * @param string                          $id
-     * @param string                          $email
-     * @param string                          $firstName
-     * @param string                          $lastName
-     * @param float                           $capital
-     * @param string|null                     $password
-     * @param \App\Domain\Model\Profit[]|null $profits
-     * @param bool                            $blocked
-     * @param bool                            $removed
-     * @param \DateTimeImmutable|null         $createdAt
-     * @param \DateTimeImmutable|null         $updatedAt
-     */
     public function __construct(
-        string $id,
-        string $email,
-        string $firstName,
-        string $lastName,
-        float $capital,
-        ?string $password = null,
-        array $profits = null,
-        bool $blocked = false,
-        bool $removed = false,
+        private string $id,
+        private string $email,
+        private string $firstName,
+        private string $lastName,
+        private float $startCapital,
+        private string|null $password = null,
+        private array|null $profits = null,
+        private bool $blocked = false,
+        private bool $removed = false,
         \DateTimeImmutable $createdAt = null,
         \DateTimeImmutable $updatedAt = null
     ) {
-        $this->id = $id;
-        $this->email = $email;
-        $this->password = $password;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->startCapital = $capital;
-        $this->profits = $profits;
-        $this->blocked = $blocked;
-        $this->removed = $removed;
         $this->createdAt = $createdAt ?: new \DateTimeImmutable();
         $this->updatedAt = $updatedAt ?: new \DateTimeImmutable();
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     */
     public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
     public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string|null $password
-     */
-    public function setPassword(?string $password): void
+    public function setPassword(string|null $password): void
     {
         $this->password = $password;
     }
 
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     */
     public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
     }
 
-    /**
-     * @return string
-     */
     public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @param string $lastName
-     */
     public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
 
-    /**
-     * @return float
-     */
     public function getStartCapital(): float
     {
         return $this->startCapital;
     }
 
-    /**
-     * @param float $startCapital
-     */
     public function setStartCapital(float $startCapital): void
     {
         $this->startCapital = $startCapital;
     }
 
-    /**
-     * @return bool
-     */
     public function hasProfits(): bool
     {
         return (null !== $this->getProfits()) || (is_array($this->getProfits()) ? count($this->getProfits()) > 0 : false);
     }
 
-    /**
-     * @return \App\Domain\Model\Profit[]|null
-     */
     public function getProfits(): ?array
     {
         return $this->profits;
     }
 
-    /**
-     * @param \App\Domain\Model\Profit[] $profits
-     */
     public function setProfits(array $profits): void
     {
         $this->profits = $profits;
     }
 
-    /**
-     * @param \App\Domain\Model\Profit $profit
-     */
     public function addProfit(Profit $profit): void
     {
         $this->profits = array_merge($this->getProfits(), [$profit]);
     }
 
-    /**
-     * @return bool
-     */
     public function isBlocked(): bool
     {
         return $this->blocked;
     }
 
-    /**
-     * @param bool $blocked
-     */
     public function setBlocked(bool $blocked): void
     {
         $this->blocked = $blocked;
     }
 
-    /**
-     * @return bool
-     */
     public function isRemoved(): bool
     {
         return $this->removed;
     }
 
-    /**
-     * @param bool $removed
-     */
     public function setRemoved(bool $removed): void
     {
         $this->removed = $removed;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $createdAt
-     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $updatedAt
-     */
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @param float $amount
-     * @return \App\Domain\Model\User
      * @throws InvalidFundsException
      */
     public function withdraw(float $amount): self
@@ -274,7 +168,7 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
     }
 
     /**
-     * @throws \App\Common\Exception\InvalidUserStateException
+     * @throws InvalidUserStateException
      */
     public function block(): void
     {
@@ -286,7 +180,7 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
     }
 
     /**
-     * @throws \App\Common\Exception\InvalidUserStateException
+     * @throws InvalidUserStateException
      */
     public function unblock(): void
     {
@@ -300,7 +194,7 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
     }
 
     /**
-     * @throws \App\Common\Exception\InvalidUserStateException
+     * @throws InvalidUserStateException
      */
     public function remove(): void
     {
@@ -317,13 +211,6 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
         $this->setRemoved(false);
     }
 
-    /**
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string $password
-     * @param float  $capital
-     */
     public function update(string $firstName, string $lastName, string $email, string $password, float $capital): void
     {
         if (!$this->isEqualTo($firstName, $this->getFirstName())) {
@@ -343,12 +230,7 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
         }
     }
 
-    /**
-     * @param int|string|float|object $value
-     * @param int|string|float|object $match
-     * @return bool
-     */
-    protected function isEqualTo($value, $match): bool
+    protected function isEqualTo(mixed $value, mixed $match): bool
     {
         return $value === $match;
     }
@@ -361,9 +243,6 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
         ]);
     }
 
-    /**
-     * @return float
-     */
     public function getCapital(): float
     {
         $profits = [];
@@ -378,41 +257,26 @@ class User implements Analysable, UserInterface, PasswordAuthenticatedUserInterf
         return $startCapital + array_sum($profits);
     }
 
-    /**
-     * @return array|string[]
-     */
     public function getRoles(): array
     {
         return [];
     }
 
-    /**
-     * @return string
-     */
     public function getSalt(): string
     {
         return $this->getPassword();
     }
 
-    /**
-     * @return void
-     */
     public function eraseCredentials(): void
     {
         $this->setPassword(null);
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->getEmail();
     }
 
-    /**
-     * @return string
-     */
     public function getUserIdentifier(): string
     {
         return $this->getEmail();

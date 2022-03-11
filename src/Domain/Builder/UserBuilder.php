@@ -9,10 +9,6 @@ use Symfony\Component\Uid\Uuid;
 class UserBuilder implements Builder
 {
     /**
-     * @param array<string, string|int> $arguments
-     *
-     * @return \App\Domain\Model\User
-     *
      * @throws \Exception
      */
     public function build(array $arguments): User

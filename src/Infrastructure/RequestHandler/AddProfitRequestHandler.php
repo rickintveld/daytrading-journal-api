@@ -7,22 +7,14 @@ use App\Common\Contracts\Command;
 use App\Common\Exception\InvalidArgumentException;
 use App\Infrastructure\Contracts\RequestHandler\ProfitRequestHandlerInterface;
 
-/**
- * @package App\Infrastructure\RequestHandler
- */
 class AddProfitRequestHandler extends RequestHandler implements ProfitRequestHandlerInterface
 {
-    /**
-     * @param int $requestType
-     * @return bool
-     */
     public function supports(int $requestType): bool
     {
         return RequestHandler::PROFIT_ADD_TYPE === $requestType;
     }
 
     /**
-     * @param array{userId: int, profit: float} $payload
      * @throws InvalidArgumentException
      */
     protected function validatePayload(array $payload): void
@@ -34,10 +26,6 @@ class AddProfitRequestHandler extends RequestHandler implements ProfitRequestHan
         }
     }
 
-    /**
-     * @param array{userId: int, profit: float} $payload
-     * @return \App\Common\Contracts\Command
-     */
     protected function createCommand(array $payload): Command
     {
         return new AddProfitCommand((int)$payload['userId'], (float)$payload['profit']);

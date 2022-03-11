@@ -7,26 +7,15 @@ use App\Common\Contracts\QueryBus;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-/**
- * @package App\Common\Bus
- */
 final class MessengerQueryBus implements QueryBus
 {
     use HandleTrait;
 
-    /**
-     * @param \Symfony\Component\Messenger\MessageBusInterface $messageBus
-     */
-    public function __construct(MessageBusInterface $messageBus)
+    public function __construct(private MessageBusInterface $messageBus)
     {
-        $this->messageBus = $messageBus;
     }
 
-    /**
-     * @param \App\Common\Contracts\Query $query
-     * @return mixed|null
-     */
-    public function query(Query $query)
+    public function query(Query $query): mixed
     {
         return $this->handle($query);
     }

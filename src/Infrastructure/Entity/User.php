@@ -83,18 +83,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         $this->removed = false;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getId(): ?string
+    public function getId(): string|null
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setId(string $id): self
     {
         $this->id = $id;
@@ -102,18 +95,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getEmail(): ?string
+    public function getEmail(): string|null
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -121,18 +107,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPassword(): ?string
+    public function getPassword(): string|null
     {
         return $this->password;
     }
 
-    /**
-     * @param string|null $password
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setPassword(?string $password): self
     {
         $this->password = $password;
@@ -140,18 +119,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFirstName(): ?string
+    public function getFirstName(): string|null
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
@@ -159,18 +131,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLastName(): ?string
+    public function getLastName(): string|null
     {
         return $this->lastName;
     }
 
-    /**
-     * @param string $lastName
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -178,18 +143,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function getBlocked(): ?bool
+    public function getBlocked(): bool
     {
         return $this->blocked;
     }
 
-    /**
-     * @param bool $blocked
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setBlocked(bool $blocked): self
     {
         $this->blocked = $blocked;
@@ -197,18 +155,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function getRemoved(): ?bool
+    public function getRemoved(): bool
     {
         return $this->removed;
     }
 
-    /**
-     * @param bool $removed
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setRemoved(bool $removed): self
     {
         $this->removed = $removed;
@@ -216,18 +167,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $createdAt
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -235,18 +179,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $updatedAt
-     * @return \App\Infrastructure\Entity\User
-     */
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
@@ -254,26 +191,17 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return \App\Infrastructure\Entity\UserSettings|null
-     */
-    public function getUserSettings(): ?UserSettings
+    public function getUserSettings(): UserSettings|null
     {
         return $this->userSettings;
     }
 
-    /**
-     * @param \App\Infrastructure\Entity\UserSettings|null $userSettings
-     * @return \App\Infrastructure\Entity\User
-     */
-    public function setUserSettings(?UserSettings $userSettings): self
+    public function setUserSettings(UserSettings|null $userSettings): self
     {
-        // unset the owning side of the relation if necessary
         if ($userSettings === null && $this->userSettings !== null) {
             $this->userSettings->setUser(null);
         }
 
-        // set the owning side of the relation if necessary
         if ($userSettings !== null && $userSettings->getUser() !== $this) {
             $userSettings->setUser($this);
         }
@@ -283,19 +211,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getProfits(): Collection
     {
         return $this->profits;
     }
 
-    /**
-     * @param \App\Infrastructure\Entity\Profit $profit
-     *
-     * @return \App\Infrastructure\Entity\User
-     */
     public function addProfit(Profit $profit): self
     {
         if (!$this->profits->contains($profit)) {
@@ -306,13 +226,8 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @param \App\Infrastructure\Entity\Profit $profit
-     * @return \App\Infrastructure\Entity\User
-     */
     public function removeProfit(Profit $profit): self
     {
-        // set the owning side to null (unless already changed)
         if ($this->profits->removeElement($profit) && $profit->getUser() === $this) {
             $profit->setUser(null);
         }
@@ -320,41 +235,26 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    /**
-     * @return array|string[]
-     */
     public function getRoles(): array
     {
         return [];
     }
 
-    /**
-     * @return string
-     */
     public function getSalt(): string
     {
         return $this->getPassword();
     }
 
-    /**
-     * @return void
-     */
     public function eraseCredentials(): void
     {
         $this->password = null;
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->getEmail();
     }
 
-    /**
-     * @return string
-     */
     public function getUserIdentifier(): string
     {
         return $this->getEmail();

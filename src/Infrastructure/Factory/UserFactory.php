@@ -8,26 +8,13 @@ use App\Infrastructure\Entity\User;
 use App\Infrastructure\Entity\UserSettings;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * @package App\Infrastructure\Factory
- */
 class UserFactory
 {
-    private UserPasswordHasherInterface $passwordHasher;
-
-    /**
-     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $passwordHasher
-     */
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
-        $this->passwordHasher = $passwordHasher;
     }
 
     /**
-     * @param \App\Infrastructure\Entity\User $user
-     *
-     * @return \App\Domain\Model\User
-     *
      * @throws \Exception
      */
     public function toDomainUser(User $user): DomainUser
@@ -47,11 +34,6 @@ class UserFactory
         );
     }
 
-    /**
-     * @param \App\Domain\Model\User $domainUser
-     *
-     * @return \App\Infrastructure\Entity\User
-     */
     public function toPersistence(DomainUser $domainUser): User
     {
         if (null === $domainUser->getPassword()) {
@@ -90,10 +72,6 @@ class UserFactory
         return $user;
     }
 
-    /**
-     * @param \App\Domain\Model\User $domainUser
-     * @return \App\Infrastructure\Entity\User
-     */
     public function createNewUser(DomainUser $domainUser): User
     {
         $user = new User();

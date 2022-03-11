@@ -8,6 +8,7 @@ use App\Domain\Model\User as DomainUser;
 use App\Infrastructure\Entity\User;
 use App\Infrastructure\Factory\UserFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,28 +19,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {
-    private UserFactory $userFactory;
-
-    /**
-     * UserRepository constructor.
-     *
-     * @param \Doctrine\Persistence\ManagerRegistry   $registry
-     * @param \App\Infrastructure\Factory\UserFactory $userFactory
-     */
-    public function __construct(ManagerRegistry $registry, UserFactory $userFactory)
+    public function __construct(ManagerRegistry $registry, private UserFactory $userFactory)
     {
         parent::__construct($registry, User::class);
-        $this->userFactory = $userFactory;
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @return \App\Domain\Model\User
-     *
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
     public function findOneByIdentifier(string $identifier): DomainUser
     {
         $user = $this->createQueryBuilder('u')
@@ -58,11 +42,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     }
 
     /**
-     * @param string $email
-     *
-     * @return \App\Domain\Model\User|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneByEmail(string $email): ?DomainUser
     {
@@ -78,15 +58,10 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     }
 
     /**
-     * @param string $email
-     * @param string $password
-     *
-     * @return \App\Domain\Model\User|null
-     *
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws UserNotFoundException
+     * @throws NonUniqueResultException
      */
-    public function findByEmailAndPassword(string $email, string $password): ?DomainUser
+    public function findByEmailAndPassword(string $email, string $password): DomainUser|null
     {
         $user = $this->createQueryBuilder('u')
             ->where('u.email = :email')
@@ -108,10 +83,6 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
     }
 
     /**
-     * @param bool $isBlocked
-     * @param bool $isRemoved
-     *
-     * @return \App\Domain\Model\User[]
      * @throws \Exception
      */
     public function findAllActive(bool $isBlocked, bool $isRemoved): array
@@ -132,12 +103,6 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         );
     }
 
-    /**
-     * @param \App\Domain\Model\User $user
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
     public function store(DomainUser $user): void
     {
         $this->getEntityManager()->persist($this->userFactory->toPersistence($user));

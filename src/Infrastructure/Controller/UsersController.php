@@ -13,26 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/users")
- * @package App\Infrastructure\Controller
  */
 class UsersController extends AbstractController
 {
-    private QueryBus $queryBus;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Common\Contracts\QueryBus $queryBus
-     * @param \Psr\Log\LoggerInterface       $logger
-     */
-    public function __construct(QueryBus $queryBus, LoggerInterface $logger)
+    public function __construct(private QueryBus $queryBus, private LoggerInterface $logger)
     {
-        $this->queryBus = $queryBus;
-        $this->logger = $logger;
     }
 
     /**
      * @Route("/", name="users", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function users(): JsonResponse
     {
@@ -55,7 +44,6 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/blocked", name="blocked-users", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function blockedUsers(): JsonResponse
     {
@@ -78,7 +66,6 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/removed", name="removed-users", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function removedUsers(): JsonResponse
     {

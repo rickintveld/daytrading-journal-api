@@ -16,30 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/user")
- * @package App\Infrastructure\Controller
  */
 class UserController extends AbstractController
 {
-    private QueryBus $queryBus;
-    private UserRequestHandler $userRequestHandler;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Common\Contracts\QueryBus                        $queryBus
-     * @param \App\Infrastructure\RequestHandler\UserRequestHandler $userRequestHandler
-     * @param \Psr\Log\LoggerInterface                              $logger
-     */
-    public function __construct(QueryBus $queryBus, UserRequestHandler $userRequestHandler, LoggerInterface $logger)
-    {
-        $this->queryBus = $queryBus;
-        $this->userRequestHandler = $userRequestHandler;
-        $this->logger = $logger;
+    public function __construct(
+        private QueryBus $queryBus,
+        private UserRequestHandler $userRequestHandler,
+        private LoggerInterface $logger
+    ) {
     }
 
     /**
      * @Route("/{id}", name="user", methods={"GET"})
-     * @param string $id
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function user(string $id): JsonResponse
     {
@@ -63,9 +51,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/create", name="user-create", methods={"POST"})
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function create(Request $request): JsonResponse
     {
@@ -91,8 +76,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/update", name="user-update", methods={"PUT"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function update(Request $request): JsonResponse
     {
@@ -117,9 +100,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/block", name="user-block", methods={"POST"})
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function block(Request $request): JsonResponse
     {
@@ -144,9 +124,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/unblock", name="user-unblock", methods={"POST"})
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function unblock(Request $request): JsonResponse
     {
@@ -171,9 +148,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/remove", name="user-remove", methods={"POST"})
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function remove(Request $request): JsonResponse
     {
@@ -198,9 +172,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/restore", name="user-restore", methods={"POST"})
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function restore(Request $request): JsonResponse
     {

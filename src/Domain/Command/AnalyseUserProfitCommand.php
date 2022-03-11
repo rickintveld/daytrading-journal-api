@@ -2,25 +2,22 @@
 
 namespace App\Domain\Command;
 
+use App\Common\Exception\UserNotFoundException;
 use App\Domain\Contracts\Analyse\Analyse;
 use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Statistic\StatisticResult;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * @package App\Domain\Command
- */
 class AnalyseUserProfitCommand extends Command
 {
     protected static $defaultName = 'analyse:user:profit';
     protected static $defaultDescription = 'Analyse a specific user or all users';
-
-    private Analyse $analyser;
-    private UserRepository $userRepository;
 
     private const HEADERS = [
         'total',
@@ -29,17 +26,9 @@ class AnalyseUserProfitCommand extends Command
         'winPercentage'
     ];
 
-    /**
-     * AnalyseUserProfitCommand constructor.
-     * @param \App\Domain\Contracts\Analyse\Analyse           $analyser
-     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
-     */
-    public function __construct(Analyse $analyser, UserRepository $userRepository)
+    public function __construct(private Analyse $analyser, private UserRepository $userRepository)
     {
         parent::__construct(self::$defaultName);
-
-        $this->analyser = $analyser;
-        $this->userRepository = $userRepository;
     }
 
     protected function configure(): void
@@ -48,12 +37,9 @@ class AnalyseUserProfitCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws UserNotFoundException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -69,13 +55,9 @@ class AnalyseUserProfitCommand extends Command
     }
 
     /**
-     * @param int $userId
-     *
-     * @return \App\Domain\Statistic\StatisticResult
-     *
-     * @throws \App\Common\Exception\UserNotFoundException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws UserNotFoundException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     protected function getAnalyzedUser(int $userId): StatisticResult
     {
@@ -85,7 +67,7 @@ class AnalyseUserProfitCommand extends Command
     }
 
     /**
-     * @return array[StatisticResult]
+     * @return array<StatisticResult>
      */
     protected function getAllAnalyzedUsers(): array
     {

@@ -4,37 +4,28 @@ namespace App\Application\CommandHandler;
 
 use App\Application\Command\WithdrawCommand;
 use App\Common\Contracts\CommandHandler;
+use App\Common\Exception\InvalidFundsException;
 use App\Common\Exception\UserNotFoundException;
 use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\User;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Psr\Log\LoggerInterface;
 
-/**
- * @package App\Application\CommandHandler
- */
 class WithdrawCommandHandler implements CommandHandler
 {
-    private UserRepository $userRepository;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
-     * @param \Psr\Log\LoggerInterface                        $logger
-     */
-    public function __construct(UserRepository $userRepository, LoggerInterface $logger)
+    public function __construct(private UserRepository $userRepository, private LoggerInterface $logger)
     {
-        $this->userRepository = $userRepository;
-        $this->logger = $logger;
     }
 
     /**
-     * @param \App\Application\Command\WithdrawCommand $command
-     *
-     * @throws \App\Common\Exception\InvalidFundsException
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws InvalidFundsException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function __invoke(WithdrawCommand $command): void
     {
@@ -47,11 +38,9 @@ class WithdrawCommandHandler implements CommandHandler
     }
 
     /**
-     * @param \App\Application\Command\WithdrawCommand $command
-     * @param \App\Domain\Model\User                   $user
-     * @throws \App\Common\Exception\InvalidFundsException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws InvalidFundsException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     private function handle(WithdrawCommand $command, User $user): void
     {

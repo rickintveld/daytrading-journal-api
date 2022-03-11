@@ -40,26 +40,16 @@ class Profit
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function getId(): int|null
     {
         return $this->id;
     }
 
-    /**
-     * @return \App\Infrastructure\Entity\User|null
-     */
-    public function getUser(): ?User
+    public function getUser(): User|null
     {
         return $this->user;
     }
 
-    /**
-     * @param \App\Infrastructure\Entity\User|null $user
-     * @return \App\Infrastructure\Entity\Profit
-     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -67,18 +57,11 @@ class Profit
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getAmount(): ?float
+    public function getAmount(): float|null
     {
         return $this->amount;
     }
 
-    /**
-     * @param float $amount
-     * @return \App\Infrastructure\Entity\Profit
-     */
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
@@ -86,18 +69,11 @@ class Profit
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTimeImmutable $createdAt
-     * @return \App\Infrastructure\Entity\Profit
-     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;

@@ -7,33 +7,23 @@ use App\Common\Contracts\CommandHandler;
 use App\Common\Exception\UserNotFoundException;
 use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\User;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Psr\Log\LoggerInterface;
 
-/**
- * @package App\Application\CommandHandler
- */
 class UpdateUserCommandHandler implements CommandHandler
 {
-    private UserRepository $userRepository;
-    private LoggerInterface $logger;
-
-    /**
-     * @param \App\Domain\Contracts\Repository\UserRepository $userRepository
-     * @param \Psr\Log\LoggerInterface                        $logger
-     */
-    public function __construct(UserRepository $userRepository, LoggerInterface $logger)
+    public function __construct(private UserRepository $userRepository, private LoggerInterface $logger)
     {
-        $this->userRepository = $userRepository;
-        $this->logger = $logger;
     }
 
     /**
-     * @param \App\Application\Command\UpdateUserCommand $command
-     *
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function __invoke(UpdateUserCommand $command): void
     {
@@ -46,10 +36,8 @@ class UpdateUserCommandHandler implements CommandHandler
     }
 
     /**
-     * @param \App\Application\Command\UpdateUserCommand $command
-     * @param \App\Domain\Model\User                     $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     private function handle(UpdateUserCommand $command, User $user): void
     {

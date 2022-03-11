@@ -22,25 +22,12 @@ class ProfitAddCommand extends Command
     protected static $defaultName = 'dtj:profit-add';
     protected static $defaultDescription = 'Add new profit';
 
-    private CommandBus $commandBus;
-    private EntityManagerInterface $entityManager;
-    private LoginProvider $loginProvider;
-
-    /**
-     * @param \App\Common\Contracts\CommandBus                    $commandBus
-     * @param \Doctrine\ORM\EntityManagerInterface                $entityManager
-     * @param \App\Infrastructure\Security\Provider\LoginProvider $loginProvider
-     */
     public function __construct(
-        CommandBus $commandBus,
-        EntityManagerInterface $entityManager,
-        LoginProvider $loginProvider
+        private CommandBus $commandBus,
+        private EntityManagerInterface $entityManager,
+        private LoginProvider $loginProvider
     ) {
         parent::__construct(self::$defaultName);
-
-        $this->commandBus = $commandBus;
-        $this->loginProvider = $loginProvider;
-        $this->entityManager = $entityManager;
     }
 
     protected function configure(): void
@@ -50,10 +37,6 @@ class ProfitAddCommand extends Command
              ->addArgument('profit', InputArgument::REQUIRED, 'The profit of today');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $questions = [];
@@ -76,12 +59,6 @@ class ProfitAddCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -117,9 +94,6 @@ class ProfitAddCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function provideEmailQuestion(): Question
     {
         $question = new Question('Please provide your e-mail address: ');
@@ -134,9 +108,6 @@ class ProfitAddCommand extends Command
         return $question;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function providePasswordQuestion(): Question
     {
         $question = new Question('Please provide your password: ');
@@ -152,9 +123,6 @@ class ProfitAddCommand extends Command
         return $question;
     }
 
-    /**
-     * @return \Symfony\Component\Console\Question\Question
-     */
     private function provideProfitQuestion(): Question
     {
         $question = new Question('Please provide the profit you made: ');
