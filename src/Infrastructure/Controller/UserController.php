@@ -37,16 +37,10 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'user' => $user,
-        ]);
+        return $this->json(['user' => $user], Response::HTTP_OK);
     }
 
     /**
@@ -59,19 +53,12 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Created user %s', $payload['email']),
-        ]);
-
+        return $this->json(['message' => sprintf('Created user %s', $payload['email'])], Response::HTTP_OK);
     }
 
     /**
@@ -84,18 +71,12 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Updated user %s', $payload['identifier']),
-        ]);
+        return $this->json(['message' => sprintf('Updated user %s', $payload['identifier'])], Response::HTTP_OK);
     }
 
     /**
@@ -108,18 +89,12 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('User %s is blocked', $payload['identifier']),
-        ]);
+        return $this->json(['message' => sprintf('User %s is blocked', $payload['identifier'])], Response::HTTP_OK);
     }
 
     /**
@@ -132,18 +107,12 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Unblocked user %s', $payload['identifier']),
-        ]);
+        return $this->json(['message' => sprintf('Unblocked user %s', $payload['identifier'])], Response::HTTP_OK);
     }
 
     /**
@@ -156,18 +125,12 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Removed user %s', $payload['identifier']),
-        ]);
+        return $this->json(['message' => sprintf('Removed user %s', $payload['identifier'])], Response::HTTP_OK);
     }
 
     /**
@@ -180,17 +143,11 @@ class UserController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Restored user %s', $payload['identifier']),
-        ]);
+        return $this->json(['message' => sprintf('Restored user %s', $payload['identifier'])], Response::HTTP_OK);
     }
 }

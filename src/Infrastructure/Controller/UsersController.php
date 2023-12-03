@@ -30,16 +30,10 @@ class UsersController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'users' => $users,
-        ]);
+        return $this->json(['users' => $users], Response::HTTP_OK);
     }
 
     /**
@@ -48,20 +42,14 @@ class UsersController extends AbstractController
     public function blockedUsers(): JsonResponse
     {
         try {
-            $users = $this->queryBus->query(new AllUsersQuery(true, false));
+            $users = $this->queryBus->query(new AllUsersQuery(isBlocked: true));
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'users' => $users,
-        ]);
+        return $this->json(['users' => $users], Response::HTTP_OK);
     }
 
     /**
@@ -70,19 +58,13 @@ class UsersController extends AbstractController
     public function removedUsers(): JsonResponse
     {
         try {
-            $users = $this->queryBus->query(new AllUsersQuery(false, true));
+            $users = $this->queryBus->query(new AllUsersQuery(isRemoved: true));
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage(),
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'users' => $users,
-        ]);
+        return $this->json(['users' => $users], Response::HTTP_OK);
     }
 }

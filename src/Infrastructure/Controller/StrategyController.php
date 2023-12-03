@@ -15,9 +15,6 @@ class StrategyController extends AbstractController
      */
     public function add(Request $request): JsonResponse
     {
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => ''
-        ]);
+        return $this->json(['message' => ''], Response::HTTP_OK);
     }
 }

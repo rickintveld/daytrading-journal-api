@@ -31,18 +31,12 @@ class ProfitController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage()]
-            );
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Added an amount of %s to your account', $payload['profit'])
-        ]);
+        return $this->json(['message' => sprintf('Added an amount of %s to your account', $payload['profit'])], Response::HTTP_OK);
     }
 
     /**
@@ -55,17 +49,11 @@ class ProfitController extends AbstractController
         } catch (HandlerFailedException $exception) {
             $this->logger->error($exception->getPrevious()->getMessage());
 
-            return $this->json([
-                'status' => Response::HTTP_NO_CONTENT,
-                'message' => $exception->getPrevious()->getMessage()
-            ]);
+            return $this->json(['message' => $exception->getPrevious()->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $payload = $request->toArray();
 
-        return $this->json([
-            'status' => Response::HTTP_OK,
-            'message' => sprintf('Made a withdraw of %s from your account', $payload['amount'])
-        ]);
+        return $this->json(['message' => sprintf('Made a withdraw of %s from your account', $payload['amount'])], Response::HTTP_OK);
     }
 }
