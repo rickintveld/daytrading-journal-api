@@ -1,0 +1,86 @@
+#ddev-generated
+
+http:
+  routers:
+    
+    
+    daytrading-journal-api-web-80-http:
+      
+      rule: HostRegexp(`daytrading-journal-api.ddev.site`)
+      
+      service: "daytrading-journal-api-web-80-http"
+      tls: false
+      entrypoints:
+        - http-80
+    
+    
+    daytrading-journal-api-web-8025-http:
+      
+      rule: HostRegexp(`daytrading-journal-api.ddev.site`)
+      
+      service: "daytrading-journal-api-web-8025-http"
+      tls: false
+      entrypoints:
+        - http-8025
+    
+    
+    
+    
+    
+    
+    daytrading-journal-api-web-80-https:
+      
+      rule: HostRegexp(`daytrading-journal-api.ddev.site`)
+      
+      service: "daytrading-journal-api-web-80-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-443
+    
+    
+    daytrading-journal-api-web-8025-https:
+      
+      rule: HostRegexp(`daytrading-journal-api.ddev.site`)
+      
+      service: "daytrading-journal-api-web-8025-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-8026
+    
+    
+
+  services:
+    
+    daytrading-journal-api-web-80-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-daytrading-journal-api-web:80
+    
+    daytrading-journal-api-web-8025-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-daytrading-journal-api-web:8025
+    
+    daytrading-journal-api-web-80-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-daytrading-journal-api-web:80
+    
+    daytrading-journal-api-web-8025-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-daytrading-journal-api-web:8025
+    
+
+
+tls:
+  certificates:
+    - certFile: /mnt/ddev-global-cache/traefik/certs/daytrading-journal-api.crt
+      keyFile: /mnt/ddev-global-cache/traefik/certs/daytrading-journal-api.key
+

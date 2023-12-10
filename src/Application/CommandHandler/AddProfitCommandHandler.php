@@ -4,18 +4,28 @@ namespace App\Application\CommandHandler;
 
 use App\Application\Command\AddProfitCommand;
 use App\Common\Contracts\CommandHandler;
+use App\Common\Contracts\PusherProviderInterface;
 use App\Common\Exception\UserNotFoundException;
 use App\Domain\Contracts\Repository\UserRepository;
 use App\Domain\Model\Profit;
 use App\Domain\Model\User;
+use App\Domain\Pusher\Channel;
+use App\Domain\Pusher\Event;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Psr\Log\LoggerInterface;
+use Pusher\Pusher;
 
 class AddProfitCommandHandler implements CommandHandler
 {
-    public function __construct(private UserRepository $userRepository, private LoggerInterface $logger)
-    {
+    private Pusher $pusher;
+
+    public function __construct(
+        private UserRepository $userRepository,
+        private LoggerInterface $logger,
+        PusherProviderInterface $pusherProviderInterface
+    ) {
+        $this->pusher = $pusherProviderInterface();
     }
 
     /**
@@ -42,5 +52,11 @@ class AddProfitCommandHandler implements CommandHandler
         $user->addProfit($profit);
 
         $this->userRepository->store($user);
+
+        $this->pusher->trigger(
+            Channel::PROFIT->value,
+            Event::NEW->value,
+            ['message' => sprintf('Added %s profit', $profit->getAmount())]
+        );
     }
 }
