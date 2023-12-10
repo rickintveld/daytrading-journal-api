@@ -32,6 +32,8 @@
 /providers/platform.yaml
 /sequelpro.spf
 /settings/settings.ddev.py
-/traefik
+/traefik/config/daytrading-journal-api.yaml
+/traefik/certs/daytrading-journal-api.crt
+/traefik/certs/daytrading-journal-api.key
 /xhprof/xhprof_prepend.php
 /**/README.*
